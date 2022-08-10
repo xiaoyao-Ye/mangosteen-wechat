@@ -6,7 +6,7 @@
     "commit:origin": "git pull && git add . && git-cz && git push",
     "lint": "prettier --write \"**/*.{js,ts,json,vue,md}\"",
     "release": "release-it",
-    "ci": "uni build -p mp-weixin && weichat-ci",
+    "ci": "uni build -p mp-weixin && wechat-ci",
     "dev:app": "uni -p app",
     "dev:custom": "uni -p",
     "dev:h5": "uni",
@@ -65,7 +65,8 @@
     "release-it": "^15.2.0",
     "simple-git-hooks": "^2.8.0",
     "typescript": "^4.7.4",
-    "vite": "^2.9.14"
+    "vite": "^2.9.14",
+    "wechat-ci": "^0.2.1"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run lint-staged"
