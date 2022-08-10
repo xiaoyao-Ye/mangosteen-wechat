@@ -1,5 +1,7 @@
 
 
+## [0.1.1](https://github.com/xiaoyao-Ye/wechat/compare/0.1.0...0.1.1) (2022-08-10)
+
 # 0.1.0 (2022-08-08)
 
 
