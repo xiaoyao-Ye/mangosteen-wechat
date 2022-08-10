@@ -9,7 +9,7 @@
     "publish": false
   },
   "hooks": {
-    "after:bump": "npm run ci && echo 更新版本成功"
+    "after:bump": "npm run build:mp-weixin && echo 打包成功"
   },
   "plugins": {
     "@release-it/conventional-changelog": {

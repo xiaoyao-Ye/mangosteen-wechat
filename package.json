@@ -6,7 +6,7 @@
     "commit:origin": "git pull && git add . && git-cz && git push",
     "lint": "prettier --write \"**/*.{js,ts,json,vue,md}\"",
     "release": "release-it",
-    "ci": "uni build -p mp-weixin && wechat-ci",
+    "ci": "wechat-ci",
     "dev:app": "uni -p app",
     "dev:custom": "uni -p",
     "dev:h5": "uni",
