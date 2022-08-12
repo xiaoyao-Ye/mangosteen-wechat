@@ -19,7 +19,6 @@ const title = ref('Hello Ghosteye')
   align-items: center;
   justify-content: center;
 }
-
 .logo {
   height: 200rpx;
   width: 200rpx;
