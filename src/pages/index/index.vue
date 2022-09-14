@@ -1,40 +1,79 @@
 <template>
-  <view class="content">
-    <image class="logo" src="/static/logo.png" />
-    <view class="text-area">
-      <text class="title">{{ title }}</text>
+  <view class="container">
+    <view class="head">
+      <view> 11 </view>
+      <view>xxxxx</view>
+    </view>
+    <view class="content">
+      <swiper class="swiper" :current="current" @change="change">
+        <swiper-item>
+          <view class="swiper-item">A</view>
+        </swiper-item>
+        <swiper-item>
+          <view class="swiper-item">B</view>
+        </swiper-item>
+        <swiper-item>
+          <view class="swiper-item">C</view>
+        </swiper-item>
+        <swiper-item>
+          <view class="swiper-item">D</view>
+        </swiper-item>
+      </swiper>
+    </view>
+    <view class="footer">
+      <view></view>
+      <view @click="next">{{ startApp ? 'start' : 'next' }}</view>
+      <view @click="start">{{ startApp ? '' : 'start' }}</view>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-const title = ref('Hello Ghosteye')
+const current = ref(0)
+const startApp = computed(() => current.value >= 3)
+
+const change = (e: any) => {
+  current.value = e.detail.current
+}
+
+const next = () => {
+  console.log('startApp', startApp)
+  startApp.value ? start() : current.value++
+}
+
+const start = () => {
+  uni.redirectTo({ url: '/pages/layout/index' })
+}
 </script>
 
-<style>
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.logo {
-  height: 200rpx;
-  width: 200rpx;
-  margin-top: 200rpx;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50rpx;
+<style lang="scss">
+.container {
+  display: grid;
+  grid-template-rows: 200rpx 1fr 120rpx;
+  padding: 100rpx 20rpx;
+  width: 100vw;
+  height: 100vh;
+  background-color: skyblue;
+  .content {
+    border-radius: 20rpx;
+    background-color: #fff;
+  }
+  .footer {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 100rpx 1fr 100rpx;
+    place-items: center;
+    > view:last-child {
+      place-self: center end;
+    }
+  }
 }
 
-.text-area {
-  display: flex;
-  justify-content: center;
+.swiper {
+  height: 100%;
 }
-
-.title {
-  font-size: 36rpx;
-  color: #8f8f94;
+.swiper-item {
+  height: 100%;
+  text-align: center;
 }
 </style>
