@@ -3,5 +3,5 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["plusempty", "uview"]
+  "cSpell.words": ["daterange", "plusempty", "uview"]
 }
