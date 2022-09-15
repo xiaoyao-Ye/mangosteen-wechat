@@ -4,14 +4,28 @@
     {
       "path": "pages/index/index",
       "style": {
-        // "navigationBarTitleText": "uni-app",
+        "enablePullDownRefresh": false,
         "navigationStyle": "custom"
       }
     },
     {
       "path": "pages/layout/index",
       "style": {
-        // "navigationBarTitleText": "uni-app",
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/addBill/index",
+      "style": {
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/addEmoji/index",
+      "style": {
+        "enablePullDownRefresh": false,
         "navigationStyle": "custom"
       }
     }
@@ -20,6 +34,8 @@
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "backgroundColor": "#F8F8F8",
+    // 禁止页面滚动(移除ios回弹效果), 只能使用overflow: scroll 实现滚动效果
+    "disableScroll": true
   }
 }

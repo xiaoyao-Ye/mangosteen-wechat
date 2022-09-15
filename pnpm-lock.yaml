@@ -18,6 +18,7 @@ specifiers:
   '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3040820220424001
   '@dcloudio/vite-plugin-uni': 3.0.0-alpha-3040820220424001
   '@release-it/conventional-changelog': ^5.0.0
+  dayjs: ^1.11.5
   git-cz: ^4.9.0
   prettier: ^2.7.1
   release-it: ^15.2.0
@@ -26,7 +27,6 @@ specifiers:
   typescript: ^4.7.4
   unplugin-auto-import: ^0.11.2
   unplugin-vue-components: ^0.22.7
-  uview-ui: 2.0.31
   vite: ^2.9.14
   vue: ^3.2.37
   vue-i18n: ^9.1.9
@@ -45,7 +45,7 @@ dependencies:
   '@dcloudio/uni-mp-toutiao': 3.0.0-alpha-3040820220424001_vue@3.2.39
   '@dcloudio/uni-mp-weixin': 3.0.0-alpha-3040820220424001_vue@3.2.39
   '@dcloudio/uni-quickapp-webview': 3.0.0-alpha-3040820220424001_vue@3.2.39
-  uview-ui: 2.0.31
+  dayjs: 1.11.5
   vue: 3.2.39
   vue-i18n: 9.2.2_vue@3.2.39
 
@@ -5136,6 +5136,11 @@ packages:
     resolution:
       { integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q== }
     dev: true
+
+  /dayjs/1.11.5:
+    resolution:
+      { integrity: sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA== }
+    dev: false
 
   /debounce-fn/4.0.0:
     resolution:
@@ -10452,12 +10457,6 @@ packages:
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
     hasBin: true
     dev: true
-
-  /uview-ui/2.0.31:
-    resolution:
-      { integrity: sha512-I/0fGuvtiKHH/mBb864SGYk+SJ7WaF32tsBgYgeBOsxlUp+Th+Ac2tgz2cTvsQJl6eZYWsKZ3ixiSXCAcxZ8Sw== }
-    engines: { HBuilderX: ^3.1.0 }
-    dev: false
 
   /validate-npm-package-license/3.0.4:
     resolution:

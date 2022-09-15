@@ -7,11 +7,41 @@
       </view>
     </NavBar>
 
+    <uni-segmented-control
+      :current="current"
+      :values="['本月', '上月', '今年', '选择时间段']"
+      @clickItem="tabChange"
+      styleType="text"
+      activeColor="#4cd964"
+    ></uni-segmented-control>
+    <view class="content">
+      <view v-if="!currentDate.length">请选择时间</view>
+      <view v-else>
+        <view>head</view>
+        <uni-swipe-action>
+          <uni-swipe-action-item
+            v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+            :key="index"
+            :right-options="swipeActionOptions"
+            @click="swipeClick($event, index)"
+          >
+            <view>data {{ index }}</view>
+          </uni-swipe-action-item>
+        </uni-swipe-action>
+      </view>
+    </view>
+
+    <uni-datetime-picker ref="daterange" v-model="range" type="daterange" @change="rangeChange">
+      {{ '' }}
+    </uni-datetime-picker>
+
+    <view @click="login">test login</view>
+
     <view class="addBill" @click="addBill">
       <uni-icons type="plusempty" size="32" color="#fff"></uni-icons>
     </view>
 
-    <uni-drawer ref="showRight" mode="left">
+    <uni-drawer ref="drawer" mode="left">
       <view class="drawer">
         <view class="head">
           <view>未登录用户</view>
@@ -30,13 +60,31 @@
 
 <script setup lang="ts">
 import NavBar from '../../components/NavBar/index.vue'
-const showRight = ref()
+import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMonthRange } from '../../utils'
 
-const showDrawer = () => {
-  showRight.value.open()
+const login = () => {
+  uni.login({
+    success: (res) => {
+      console.log('login', res)
+      // TODO: res.code 给后端
+      // 接口: https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+      // 文档: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
+    },
+  })
+  // uni.getUserProfile({
+  //   desc: 'Ghosteye welcome!',
+  //   success: (res) => {
+  //     console.log('getUserProfile', { res })
+  //   },
+  //   fail: (err) => {
+  //     console.log('getUserProfile fail', err)
+  //   },
+  // })
 }
-const closeDrawer = () => {
-  showRight.value.close()
+
+const drawer = ref()
+const showDrawer = () => {
+  drawer.value.open()
 }
 
 const menuList = ref([
@@ -49,8 +97,46 @@ const menuHandle = (menu: any) => {
   uni.showToast({ title: menu.name, icon: 'none' })
 }
 
+const current = ref<number>(0)
+const tabChange = (e: any) => {
+  if (e.currentIndex == 3) {
+    currentDate.value.length = 0
+    daterange.value.show()
+    current.value = 3
+    return
+  }
+  if (current.value === e.currentIndex) return
+  current.value = e.currentIndex
+
+  const obj: { [key: number]: any } = {
+    0: getCurrentMonthRange,
+    1: getLastMonthRange,
+    2: getCurrentYearRange,
+  }
+  currentDate.value = obj[current.value]()
+  getList()
+}
+
+const getList = () => {
+  console.log('currentDate', currentDate.value)
+}
+
+const daterange = ref()
+const range = ref([new Date(), new Date()])
+const currentDate = ref<string[]>([]) // 当前选中的日期
+const rangeChange = (val: string[]) => {
+  currentDate.value = formatDateRange(val)
+  getList()
+}
+
+const swipeActionOptions = [{ text: '修改' }, { text: '删除', style: { backgroundColor: 'red' } }]
+const swipeClick = (e: any, index: number) => {
+  console.log('点击了' + (e.position === 'left' ? '左侧' : '右侧') + e.content.text + '按钮' + index)
+}
+
 const addBill = () => {
-  uni.showToast({ title: 'addBill', icon: 'none' })
+  // uni.showToast({ title: 'addBill', icon: 'none' })
+  uni.navigateTo({ url: '/pages/addBill/index' })
 }
 </script>
 
