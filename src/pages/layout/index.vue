@@ -59,16 +59,21 @@
 </template>
 
 <script setup lang="ts">
+import axios from '../../api'
 import NavBar from '../../components/NavBar/index.vue'
-import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMonthRange } from '../../utils'
+import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMonthRange } from '../../utils/dayjs'
 
 const login = () => {
   uni.login({
-    success: (res) => {
-      console.log('login', res)
-      // TODO: res.code 给后端
-      // 接口: https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
-      // 文档: https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
+    success: async (res) => {
+      const url = `/api/login`
+      try {
+        // TODO: res.code 给后端
+        const result = await axios({ url, params: { code: res.code }, method: 'GET' })
+        console.log('result', result)
+      } catch (error) {
+        console.log('error', error)
+      }
     },
   })
   // uni.getUserProfile({
