@@ -67,6 +67,7 @@
     "@types/node": "^18.7.18",
     "@types/qs": "^6.9.7",
     "git-cz": "^4.9.0",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "release-it": "^15.2.0",
     "scss": "^0.2.4",
@@ -78,7 +79,7 @@
     "wechat-ci": "^0.2.6"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
+    "pre-commit": "npm run lint-staged"
   },
   "lint-staged": {
     "*": [
