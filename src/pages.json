@@ -37,5 +37,6 @@
     "backgroundColor": "#F8F8F8",
     // 禁止页面滚动(移除ios回弹效果), 只能使用overflow: scroll 实现滚动效果
     "disableScroll": true
-  }
+  },
+  "lazyCodeLoading": "requiredComponents"
 }
