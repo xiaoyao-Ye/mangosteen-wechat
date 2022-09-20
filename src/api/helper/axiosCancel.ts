@@ -5,18 +5,13 @@ import axios, { AxiosRequestConfig, Canceler } from 'axios'
 let pendingMap = new Map<string, Canceler>()
 
 // 序列化参数
-const stringify = (data: any) => {
-  // TODO: WIP
-  let ret = ''
-  for (const key in data) {
-    ret += key + '=' + data[key] + '&'
-  }
-  return ret
+export const getPendingUrl = (config: AxiosRequestConfig) => {
+  let data = config.data
+  try {
+    data = JSON.parse(config.data)
+  } catch {}
+  return [config.method, config.url, JSON.stringify(data), JSON.stringify(config.params)].join('&')
 }
-
-// 序列化参数
-export const getPendingUrl = (config: AxiosRequestConfig) =>
-  [config.method, config.url, stringify(config.data), stringify(config.params)].join('&')
 
 export class AxiosCanceler {
   /**

@@ -11,8 +11,8 @@ const statusList: Indexable = {
   504: '网关超时！',
 }
 
-export const checkStatus = (status: number) => {
+export const checkStatus = (status: number, message?: string) => {
   // if (status == 1024) { ...自定义处理 }
-  // TODO: 错误提示
-  console.log(statusList[status] ?? '请求失败！')
+  // TODO: 错误提示, 有提供错误消息优先使用, 没有则使用默认消息
+  console.log(message ?? statusList[status] ?? '请求失败！')
 }
