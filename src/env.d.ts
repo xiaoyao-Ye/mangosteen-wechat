@@ -7,4 +7,5 @@ declare module '*.vue' {
   export default component
 }
 
-type Indexable = { [key: number | string]: any }
+// type Indexable = { [key: number | string]: any }
+type Indexable = Record<number | string, any>
