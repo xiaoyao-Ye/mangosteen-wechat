@@ -61,30 +61,37 @@
 <script setup lang="ts">
 import axios from '../../api'
 import NavBar from '../../components/NavBar/index.vue'
+import { TOKEN } from '../../config/storage_key'
 import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMonthRange } from '../../utils/dayjs'
 
 const login = () => {
-  uni.login({
-    success: async (res) => {
-      const url = `/api/login`
-      try {
-        // TODO: res.code 给后端
-        const result = await axios({ url, params: { code: res.code }, method: 'GET' })
-        console.log('result', result)
-      } catch (error) {
-        console.log('error', error)
-      }
+  uni.getUserProfile({
+    desc: 'Ghosteye welcome!',
+    success: (user) => {
+      uni.login({
+        success: async ({ code }) => {
+          try {
+            const url = `/api/v1/auth/login`
+            const gender = ['未知', '男', '女']
+            const data = {
+              code,
+              nickName: user.userInfo.nickName,
+              avatar: user.userInfo.avatarUrl,
+              gender: gender[user.userInfo.gender!],
+            }
+            const res = await axios({ url, data, method: 'POST' })
+            uni.setStorageSync(TOKEN, res.data.token)
+            console.log('result', res)
+          } catch (error) {
+            console.log('error', error)
+          }
+        },
+      })
+    },
+    fail: (err) => {
+      console.log('getUserProfile fail', err)
     },
   })
-  // uni.getUserProfile({
-  //   desc: 'Ghosteye welcome!',
-  //   success: (res) => {
-  //     console.log('getUserProfile', { res })
-  //   },
-  //   fail: (err) => {
-  //     console.log('getUserProfile fail', err)
-  //   },
-  // })
 }
 
 const drawer = ref()
@@ -122,8 +129,14 @@ const tabChange = (e: any) => {
   getList()
 }
 
-const getList = () => {
+const getList = async () => {
   console.log('currentDate', currentDate.value)
+  try {
+    const res = await axios({ url: '/api/v1/tags', method: 'GET' })
+    console.log({ res })
+  } catch (error) {
+    console.log('error1', error)
+  }
 }
 
 const daterange = ref()
