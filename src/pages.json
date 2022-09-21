@@ -9,6 +9,13 @@
       }
     },
     {
+      "path": "pages/login/index",
+      "style": {
+        "enablePullDownRefresh": false,
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/layout/index",
       "style": {
         "enablePullDownRefresh": false,
