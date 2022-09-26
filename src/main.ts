@@ -1,7 +1,7 @@
 import { createSSRApp } from 'vue'
 import App from './App.vue'
 
-// import 'virtual:uno.css'
+// import 'uno.css'
 import './styles/reset.scss'
 
 export function createApp() {

@@ -1,21 +1,30 @@
 <template>
   <view>
-    <NavBar :show-height="true" background="skyblue">
-      <view class="navBar">
-        <uni-icons type="back" size="32" @click="back"></uni-icons>
-        <text>xx</text>
+    <NavBar :show-height="true" background="#fff">
+      <view class="navBar" @click="back">
+        <uni-icons type="back" size="24"></uni-icons>
+        <text>{{ isEdit ? '编辑记录' : '新增记录' }}</text>
       </view>
     </NavBar>
 
     <uni-segmented-control
       :current="current"
-      :values="['呵呵', '哈哈']"
+      :values="['支出', '收入']"
       @clickItem="tabChange"
       styleType="text"
       activeColor="#4cd964"
     ></uni-segmented-control>
 
-    <view @click="addEmoji">add emoji</view>
+    <view class="tagList">
+      <view class="addEmoji tagList-item" @click="addEmoji">
+        <uni-icons type="plusempty" size="24" color="skyblue"></uni-icons>
+        <text>添加标签</text>
+      </view>
+      <view class="tagList-item" v-for="tag in tagList" :key="tag.id">
+        <text>{{ tag.emoji }}</text>
+        <text>{{ tag.name }}</text>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -26,18 +35,58 @@ const back = () => {
   uni.navigateBack()
 }
 
+const isEdit = ref(false)
+
 const current = ref<number>(0)
 const tabChange = (e: any) => {}
 
 const addEmoji = () => {
   uni.navigateTo({ url: '/pages/addEmoji/index' })
 }
+
+const tagList = ref<any[]>([])
+const getList = () => {
+  tagList.value = [
+    { name: '呵呵', emoji: '😁', id: 0 },
+    { name: 'test', emoji: '😁', id: 1 },
+    { name: 'test2', emoji: '😁', id: 2 },
+    { name: 'test3', emoji: '😁', id: 3 },
+    { name: 'test4', emoji: '😁', id: 4 },
+    { name: 'test5', emoji: '😁', id: 5 },
+    { name: 'test6', emoji: '😁', id: 6 },
+    { name: 'test7', emoji: '😁', id: 7 },
+    { name: 'test8', emoji: '😁', id: 8 },
+  ]
+}
+getList()
 </script>
 
 <style lang="scss" scoped>
 .navBar {
+  width: fit-content;
+  padding: 0 20rpx;
   height: 100%;
   display: flex;
   align-items: center;
+}
+
+.tagList {
+  padding: 20rpx;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20rpx;
+  .addEmoji {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: skyblue;
+  }
+  &-item {
+    padding: 0 10rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    border-radius: 12rpx;
+    box-shadow: 0 0 4rpx 2rpx skyblue;
+  }
 }
 </style>
