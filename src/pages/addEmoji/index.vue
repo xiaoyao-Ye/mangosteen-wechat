@@ -12,7 +12,7 @@
       <input class="tag-name" v-model="inputValue" @input="input" focus placeholder="请输入标签名称" />
     </view>
 
-    <uni-popup ref="popup" type="bottom" @maskClick="popup.close()">
+    <uni-popup ref="popup" type="bottom" background="#fff" @maskClick="popup.close()">
       <view class="popup">
         <view class="emoji">
           <view v-for="item in emojiList" :key="item[0]">
@@ -72,6 +72,7 @@ const onSubmit = () => {
     return
   }
   console.log('onSubmit', inputValue.value, selectedEmoji.value)
+  back()
 }
 </script>
 
@@ -113,7 +114,7 @@ const onSubmit = () => {
 }
 
 .popup {
-  height: 75vh;
+  height: 70vh;
   overflow-y: scroll;
 }
 

@@ -65,6 +65,8 @@ import { TOKEN } from '../../config/storage_key'
 import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMonthRange } from '../../utils/dayjs'
 
 const login = () => {
+  uni.navigateTo({ url: '/pages/login/index' })
+  return
   uni.getUserProfile({
     desc: 'Ghosteye welcome!',
     success: (user) => {
