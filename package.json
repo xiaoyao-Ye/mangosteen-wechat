@@ -10,6 +10,7 @@
     "lint-staged": "lint-staged",
     "release": "release-it",
     "ci": "wechat-ci",
+    "api": "initapi create",
     "dev:app": "uni -p app",
     "dev:custom": "uni -p",
     "dev:h5": "uni",
