@@ -1,5 +1,5 @@
 import axios from '../index'
-import { UserDto, TagDto, BillDto } from './entity'
+import { UserDto, WeChatDto, WeChatVo, TagDto, BillDto } from './entity'
 
 export class Auth {
   static signIn(data?: UserDto) {
@@ -18,10 +18,12 @@ export class Auth {
     })
   }
 
-  static login() {
-    return axios.request<void>({
+  /** 登录_微信授权登录 */
+  static login(data?: WeChatDto) {
+    return axios.request<WeChatVo>({
       url: `/api/v1/auth/login`,
       method: 'POST',
+      data: data,
     })
   }
 }

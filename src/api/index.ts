@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios'
 // import router from '../router/index'
 import { AxiosCanceler } from './helper/axiosCancel'
 import { checkStatus } from './helper/checkStatus'
@@ -116,4 +116,10 @@ service.interceptors.response.use(
   },
 )
 
-export default service
+// 响应拦截直接返回了 data , 这里重新定义一下 request 的响应类型
+const request = <T = any, D = any>(config: AxiosRequestConfig<D>): Promise<T> => {
+  return service.request<any, T>(config)
+}
+
+export default { request }
+// export default service

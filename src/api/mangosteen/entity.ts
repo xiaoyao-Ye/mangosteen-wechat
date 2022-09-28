@@ -5,6 +5,24 @@ export class UserDto {
   code?: string
 }
 
+export class WeChatDto {
+  /** 昵称 */
+  nickName?: string
+  /** 头像 */
+  avatar?: string
+  /** 性别 */
+  gender?: string
+  /** 用户登录凭证 */
+  code?: string
+}
+
+export class WeChatVo {
+  /** token */
+  token?: string
+  /** 状态码 */
+  statusCode?: string
+}
+
 export class TagDto {
   /** 标签名 */
   name?: string
