@@ -43,7 +43,7 @@
 
     <uni-drawer ref="drawer" mode="left">
       <view class="drawer">
-        <view class="head">
+        <view class="head" @click="jumpLogin">
           <view>未登录用户</view>
           <view>点击这里进行登录</view>
         </view>
@@ -61,39 +61,19 @@
 <script setup lang="ts">
 import axios from '../../api'
 import NavBar from '../../components/NavBar/index.vue'
-import { TOKEN } from '../../config/storage_key'
 import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMonthRange } from '../../utils/dayjs'
+
+import { IS_LAUNCH } from '../../config/storage_key'
+const isLaunch = uni.getStorageSync(IS_LAUNCH)
+if (!isLaunch) uni.redirectTo({ url: '/pages/index/index' })
+
+const jumpLogin = () => {
+  uni.redirectTo({ url: '/pages/login/index' })
+}
 
 const login = () => {
   uni.navigateTo({ url: '/pages/login/index' })
   return
-  uni.getUserProfile({
-    desc: 'Ghosteye welcome!',
-    success: (user) => {
-      uni.login({
-        success: async ({ code }) => {
-          try {
-            const url = `/api/v1/auth/login`
-            const gender = ['未知', '男', '女']
-            const data = {
-              code,
-              nickName: user.userInfo.nickName,
-              avatar: user.userInfo.avatarUrl,
-              gender: gender[user.userInfo.gender!],
-            }
-            const res = await axios({ url, data, method: 'POST' })
-            uni.setStorageSync(TOKEN, res.data.token)
-            console.log('result', res)
-          } catch (error) {
-            console.log('error', error)
-          }
-        },
-      })
-    },
-    fail: (err) => {
-      console.log('getUserProfile fail', err)
-    },
-  })
 }
 
 const drawer = ref()

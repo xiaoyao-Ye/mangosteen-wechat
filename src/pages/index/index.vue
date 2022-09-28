@@ -30,8 +30,6 @@
 
 <script setup lang="ts">
 import { IS_LAUNCH } from '../../config/storage_key'
-const isLaunch = uni.getStorageSync(IS_LAUNCH)
-if (isLaunch) uni.redirectTo({ url: '/pages/layout/index' })
 
 const current = ref(0)
 const startApp = computed(() => current.value >= 3)
@@ -46,8 +44,8 @@ const next = () => {
 }
 
 const start = () => {
-  uni.redirectTo({ url: '/pages/layout/index' })
   uni.setStorageSync(IS_LAUNCH, true)
+  uni.redirectTo({ url: '/pages/layout/index' })
 }
 </script>
 

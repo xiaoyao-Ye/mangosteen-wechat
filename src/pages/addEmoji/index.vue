@@ -42,6 +42,7 @@
 <script setup lang="ts">
 import { emojiList } from '../../utils/emoji'
 import NavBar from '../../components/NavBar/index.vue'
+import { Tags } from '../../api/mangosteen/api'
 
 const back = () => {
   uni.navigateBack()
@@ -66,12 +67,13 @@ const input = (e: any) => {
 
 const inputValue = ref('')
 
-const onSubmit = () => {
+const onSubmit = async () => {
   if (!inputValue.value) {
     uni.showToast({ title: '请输入标签名称', icon: 'none' })
     return
   }
-  console.log('onSubmit', inputValue.value, selectedEmoji.value)
+  await Tags.createTag({ name: inputValue.value, sign: selectedEmoji.value })
+  uni.showToast({ title: '添加成功', icon: 'none' })
   back()
 }
 </script>

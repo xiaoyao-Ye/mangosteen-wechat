@@ -13,12 +13,61 @@
       <view></view>
       <view></view>
     </view>
+    <view class="submit" @click="login">login</view>
   </view>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Auth } from '../../api/mangosteen/api'
+import { TOKEN } from '../../config/storage_key'
+
+const login = () => {
+  uni.getUserProfile({
+    desc: 'Ghosteye welcome!',
+    success: (user) => {
+      uni.login({
+        success: async ({ code }) => {
+          try {
+            const url = `/api/v1/auth/login`
+            const gender = ['未知', '男', '女']
+            const data = {
+              code,
+              nickName: user.userInfo.nickName,
+              avatar: user.userInfo.avatarUrl,
+              gender: gender[user.userInfo.gender!],
+            }
+            const { token } = await Auth.login(data)
+            uni.setStorageSync(TOKEN, token)
+            uni.redirectTo({ url: '/pages/layout/index' })
+            console.log('result', token)
+          } catch (error) {
+            console.log('error', error)
+          }
+        },
+      })
+    },
+    fail: (err) => {
+      console.log('getUserProfile fail', err)
+    },
+  })
+}
+</script>
 
 <style lang="scss" scoped>
+.submit {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  color: #fff;
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 40%;
+  text-align: center;
+  border: 2rpx dashed;
+  border-radius: 8rpx;
+  transform: translate(-50%, -50%);
+}
+
 .login {
   width: 100vw;
   height: 100vh;
