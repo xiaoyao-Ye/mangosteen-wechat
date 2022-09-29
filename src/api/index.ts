@@ -70,24 +70,25 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     // 2xx 范围内的状态码都会触发该函数。
-    const { data, status, config } = response
+    const { data, config } = response
     // * 在请求结束后，移除本次请求，并关闭请求 loading
     axiosCanceler.removePending(config)
     // tryHideFullScreenLoading()
     console.log('response', response)
-    // TODO: 这里不在使用data.code进行判断，而是直接使用status进行判断, 而2xx以外的status都需要在error拦截里处理
+    // TODO:
+    // 2xx以外的status都需要在error拦截里处理
     // 如果后端有自定义code(有些错误可能是http状态不包含的就需要通过自定义code处理了)，可以在这里进行处理
-    if (status === 401) {
+    if (data.code === 401) {
       checkStatus(401)
       uni.removeStorageSync(TOKEN)
       // router.replace({ path: '/login' })
       return Promise.reject(data)
     }
-    if (status !== 200 && status !== 201) {
-      checkStatus(status)
+    if (data.code !== 200) {
+      checkStatus(data.code)
       return Promise.reject(data)
     }
-    return data
+    return data.data
   },
   (error: AxiosError) => {
     // 超出 2xx 范围的状态码都会触发该函数。
@@ -96,8 +97,8 @@ service.interceptors.response.use(
     if (response) {
       // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
       console.log(response.data)
-      console.log(response.status)
-      console.log(response.headers)
+      // console.log(response.status)
+      // console.log(response.headers)
       // 根据响应的错误状态码, 做不同的处理
       if (response) return checkStatus(response.status, message)
     } else if (request) {
