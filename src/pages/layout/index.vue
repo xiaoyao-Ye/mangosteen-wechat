@@ -59,7 +59,6 @@
 </template>
 
 <script setup lang="ts">
-import axios from '../../api'
 import NavBar from '../../components/NavBar/index.vue'
 import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMonthRange } from '../../utils/dayjs'
 
@@ -114,8 +113,8 @@ const tabChange = (e: any) => {
 const getList = async () => {
   console.log('currentDate', currentDate.value)
   try {
-    const res = await axios({ url: '/api/v1/tags', method: 'GET' })
-    console.log({ res })
+    // const res = await axios({ url: '/api/v1/tags', method: 'GET' })
+    // console.log({ res })
   } catch (error) {
     console.log('error1', error)
   }

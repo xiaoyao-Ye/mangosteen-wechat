@@ -21,7 +21,7 @@
         <text>添加标签</text>
       </view>
       <view class="tagList-item" v-for="tag in tagList" :key="tag.id">
-        <text>{{ tag.emoji }}</text>
+        <text>{{ tag.sign }}</text>
         <text>{{ tag.name }}</text>
       </view>
     </view>
@@ -33,6 +33,8 @@
 <script setup lang="ts">
 import NavBar from '../../components/NavBar/index.vue'
 import KeyBoard from '../../components/KeyBoard/index.vue'
+import { Tags } from '../../api/mangosteen/api'
+import { TagDto } from '../../api/mangosteen/entity'
 
 const back = () => {
   uni.navigateBack()
@@ -47,19 +49,14 @@ const addEmoji = () => {
   uni.navigateTo({ url: '/pages/addEmoji/index' })
 }
 
-const tagList = ref<any[]>([])
-const getList = () => {
-  tagList.value = [
-    { name: '呵呵', emoji: '😁', id: 0 },
-    { name: 'test', emoji: '😁', id: 1 },
-    { name: 'test2', emoji: '😁', id: 2 },
-    { name: 'test3', emoji: '😁', id: 3 },
-    { name: 'test4', emoji: '😁', id: 4 },
-    { name: 'test5', emoji: '😁', id: 5 },
-    { name: 'test6', emoji: '😁', id: 6 },
-    { name: 'test7', emoji: '😁', id: 7 },
-    { name: 'test8', emoji: '😁', id: 8 },
-  ]
+const tagList = ref<TagDto[]>([])
+const getList = async () => {
+  const params = {
+    page: 1,
+    pageSize: 10,
+  }
+  const { items, total } = await Tags.getTags(params)
+  tagList.value = items ?? []
 }
 getList()
 
