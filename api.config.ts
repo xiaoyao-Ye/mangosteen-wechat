@@ -10,8 +10,8 @@
 
 export default {
   outputDir: './src/api',
-  importAxios: 'import axios from "../index";',
-  useAxios: 'axios.request',
+  importAxios: 'import { request } from "../index";',
+  useAxios: 'request',
   swagger: {
     mangosteen: 'http://127.0.0.1:3000/api-json',
   },

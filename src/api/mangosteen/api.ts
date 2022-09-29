@@ -1,9 +1,9 @@
-import axios from '../index'
-import { UserDto, WeChatDto, WeChatVo, TagDto, BillDto } from './entity'
+import { request } from '../index'
+import { UserDto, WeChatDto, WeChatVo, TagVo, TagDto, BillDto } from './entity'
 
 export class Auth {
   static signIn(data?: UserDto) {
-    return axios.request<void>({
+    return request<void>({
       url: `/api/v1/auth/signIn`,
       method: 'POST',
       data: data,
@@ -11,7 +11,7 @@ export class Auth {
   }
 
   static sendEmail(data?: UserDto) {
-    return axios.request<void>({
+    return request<void>({
       url: `/api/v1/auth/signUp`,
       method: 'POST',
       data: data,
@@ -20,7 +20,7 @@ export class Auth {
 
   /** 登录_微信授权登录 */
   static login(data?: WeChatDto) {
-    return axios.request<WeChatVo>({
+    return request<WeChatVo>({
       url: `/api/v1/auth/login`,
       method: 'POST',
       data: data,
@@ -30,7 +30,7 @@ export class Auth {
 
 export class Tags {
   static getTags(params?: { pageNum?: number; pageSize?: number }) {
-    return axios.request<void>({
+    return request<TagVo>({
       url: `/api/v1/tags`,
       method: 'GET',
       params: params,
@@ -38,7 +38,7 @@ export class Tags {
   }
 
   static createTag(data?: TagDto) {
-    return axios.request<void>({
+    return request<void>({
       url: `/api/v1/tags`,
       method: 'POST',
       data: data,
@@ -46,7 +46,7 @@ export class Tags {
   }
 
   static updateTag(path: { id: number }, data?: TagDto) {
-    return axios.request<void>({
+    return request<void>({
       url: `/api/v1/tags/${path.id}`,
       method: 'PATCH',
       data: data,
@@ -54,7 +54,7 @@ export class Tags {
   }
 
   static deleteTag(path: { id: number }) {
-    return axios.request<void>({
+    return request<void>({
       url: `/api/v1/tags/${path.id}`,
       method: 'DELETE',
     })
@@ -63,7 +63,7 @@ export class Tags {
 
 export class Bill {
   static getBills(params?: { pageNum?: number; pageSize?: number }) {
-    return axios.request<void>({
+    return request<void>({
       url: `/api/v1/bill`,
       method: 'GET',
       params: params,
@@ -71,7 +71,7 @@ export class Bill {
   }
 
   static createBill(data?: BillDto) {
-    return axios.request<void>({
+    return request<void>({
       url: `/api/v1/bill`,
       method: 'POST',
       data: data,
@@ -79,7 +79,7 @@ export class Bill {
   }
 
   static getBillSummary(params?: { pageNum?: number; pageSize?: number }) {
-    return axios.request<void>({
+    return request<void>({
       url: `/api/v1/bill/summary`,
       method: 'GET',
       params: params,

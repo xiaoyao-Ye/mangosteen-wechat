@@ -30,6 +30,13 @@ export class TagDto {
   sign?: string
 }
 
+export class TagVo {
+  /** 列表 */
+  items?: Array<TagDto>
+  /** 总数量 */
+  total?: number
+}
+
 export class BillDto {
   /** 金额 */
   amount?: number

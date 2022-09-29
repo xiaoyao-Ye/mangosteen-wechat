@@ -117,9 +117,8 @@ service.interceptors.response.use(
 )
 
 // 响应拦截直接返回了 data , 这里重新定义一下 request 的响应类型
-const request = <T = any, D = any>(config: AxiosRequestConfig<D>): Promise<T> => {
+export const request = <T = any, D = any>(config: AxiosRequestConfig<D>): Promise<T> => {
   return service.request<any, T>(config)
 }
 
-export default { request }
 // export default service
