@@ -14,10 +14,15 @@
       styleType="text"
       activeColor="#4cd964"
     ></uni-segmented-control>
+
     <view class="content">
       <view v-if="!currentDate.length">请选择时间</view>
       <view v-else>
-        <view>head</view>
+        <view>
+          <view>z</view>
+          <view>s</view>
+          <view>z</view>
+        </view>
         <uni-swipe-action>
           <uni-swipe-action-item
             v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
@@ -25,7 +30,7 @@
             :right-options="swipeActionOptions"
             @click="swipeClick($event, index)"
           >
-            <view>data {{ index }}</view>
+            <view class="action-item">data {{ index }}</view>
           </uni-swipe-action-item>
         </uni-swipe-action>
       </view>
@@ -35,17 +40,18 @@
       {{ '' }}
     </uni-datetime-picker>
 
-    <view @click="login">test login</view>
-
     <view class="addBill" @click="addBill">
       <uni-icons type="plusempty" size="32" color="#fff"></uni-icons>
     </view>
 
     <uni-drawer ref="drawer" mode="left">
       <view class="drawer">
-        <view class="head" @click="jumpLogin">
-          <view>未登录用户</view>
-          <view>点击这里进行登录</view>
+        <view class="head" @click="loginAndLogout">
+          <view class="avatar">
+            <image :src="userInfo.avatar"></image>
+          </view>
+          <view>{{ userInfo.nickName ? userInfo.nickName : '未登录用户' }}</view>
+          <view>{{ token ? '注销' : '点击进行登录' }}</view>
         </view>
         <view class="menuList">
           <view v-for="menu in menuList" :key="menu.name" @click="menuHandle(menu)">
@@ -62,17 +68,20 @@
 import NavBar from '../../components/NavBar/index.vue'
 import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMonthRange } from '../../utils/dayjs'
 
-import { IS_LAUNCH } from '../../config/storage_key'
+import { IS_LAUNCH, TOKEN, USER_INFO } from '../../config/storage_key'
+
 const isLaunch = uni.getStorageSync(IS_LAUNCH)
 if (!isLaunch) uni.redirectTo({ url: '/pages/index/index' })
 
-const jumpLogin = () => {
-  uni.redirectTo({ url: '/pages/login/index' })
-}
+const userInfo = uni.getStorageSync(USER_INFO) ?? {}
+const token = uni.getStorageSync(TOKEN) ?? {}
 
-const login = () => {
-  uni.navigateTo({ url: '/pages/login/index' })
-  return
+const loginAndLogout = () => {
+  if (token) {
+    console.log('注销')
+  } else {
+    uni.redirectTo({ url: '/pages/login/index' })
+  }
 }
 
 const drawer = ref()
@@ -128,7 +137,10 @@ const rangeChange = (val: string[]) => {
   getList()
 }
 
-const swipeActionOptions = [{ text: '修改' }, { text: '删除', style: { backgroundColor: 'red' } }]
+const swipeActionOptions = [
+  { text: '修改', style: { backgroundColor: '#007aff' } },
+  { text: '删除', style: { backgroundColor: '#F56C6C' } },
+]
 const swipeClick = (e: any, index: number) => {
   console.log('点击了' + (e.position === 'left' ? '左侧' : '右侧') + e.content.text + '按钮' + index)
 }
@@ -161,14 +173,35 @@ const addBill = () => {
 
 .drawer {
   .head {
+    padding-bottom: 20rpx;
     padding-top: 120rpx;
+    text-align: center;
     background-color: skyblue;
+    .avatar {
+      margin: 0 auto;
+      width: 150rpx;
+      height: 150rpx;
+      overflow: hidden;
+      image {
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+      }
+    }
   }
   .menuList {
+    padding: 20rpx;
     > view {
       display: flex;
       align-items: center;
     }
+  }
+}
+
+.content {
+  .action-item {
+    padding: 20rpx;
+    height: 80rpx;
   }
 }
 </style>

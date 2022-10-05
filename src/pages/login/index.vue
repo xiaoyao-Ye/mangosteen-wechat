@@ -19,25 +19,22 @@
 
 <script setup lang="ts">
 import { Auth } from '../../api/mangosteen/api'
-import { TOKEN } from '../../config/storage_key'
+import { TOKEN, USER_INFO } from '../../config/storage_key'
 
 const login = () => {
   uni.getUserProfile({
     desc: 'Ghosteye welcome!',
     success: (user) => {
+      const nickName = user.userInfo.nickName
+      const avatar = user.userInfo.avatarUrl
+      const gender = ['未知', '男', '女'][user.userInfo.gender!]
+      uni.setStorageSync(USER_INFO, { nickName, avatar, gender })
       uni.login({
         success: async ({ code }) => {
           try {
-            const url = `/api/v1/auth/login`
-            const gender = ['未知', '男', '女']
-            const data = {
-              code,
-              nickName: user.userInfo.nickName,
-              avatar: user.userInfo.avatarUrl,
-              gender: gender[user.userInfo.gender!],
-            }
+            const data = { code, nickName, avatar, gender }
             const { token } = await Auth.login(data)
-            uni.setStorageSync(TOKEN, token)
+            uni.setStorageSync(TOKEN, token ?? '')
             uni.redirectTo({ url: '/pages/layout/index' })
             console.log('result', token)
           } catch (error) {

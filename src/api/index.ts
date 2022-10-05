@@ -70,7 +70,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     // 2xx 范围内的状态码都会触发该函数。
-    const { data, config } = response
+    const { data, config, statusText } = response
+    if (!data) return Promise.reject(new Error(statusText))
     // * 在请求结束后，移除本次请求，并关闭请求 loading
     axiosCanceler.removePending(config)
     // tryHideFullScreenLoading()

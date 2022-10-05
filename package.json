@@ -55,7 +55,6 @@
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3060320220919001",
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
-    "qs": "^6.11.0",
     "vue": "^3.2.39",
     "vue-i18n": "^9.1.9"
   },
@@ -67,7 +66,6 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3060320220919001",
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/node": "^18.7.18",
-    "@types/qs": "^6.9.7",
     "git-cz": "^4.9.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
