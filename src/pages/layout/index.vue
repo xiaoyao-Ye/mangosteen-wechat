@@ -1,8 +1,8 @@
 <template>
   <view>
-    <NavBar :show-height="true" background="skyblue">
+    <NavBar :show-height="true" background="transparent">
       <view class="navBar">
-        <uni-icons type="list" size="32" @click="showDrawer"></uni-icons>
+        <uni-icons type="list" size="28" style="margin-right: 20rpx" @click="showDrawer"></uni-icons>
         <text>呵呵</text>
       </view>
     </NavBar>
@@ -18,7 +18,7 @@
     <view class="content">
       <view v-if="!currentDate.length">请选择时间</view>
       <view v-else>
-        <view>
+        <view class="banner">
           <view>z</view>
           <view>s</view>
           <view>z</view>
@@ -138,7 +138,7 @@ const rangeChange = (val: string[]) => {
 }
 
 const swipeActionOptions = [
-  { text: '修改', style: { backgroundColor: '#007aff' } },
+  { text: '修改', style: { backgroundColor: '#4cd964' } },
   { text: '删除', style: { backgroundColor: '#F56C6C' } },
 ]
 const swipeClick = (e: any, index: number) => {
@@ -153,6 +153,7 @@ const addBill = () => {
 
 <style lang="scss" scoped>
 .navBar {
+  padding: 0 20rpx;
   display: flex;
   align-items: center;
   height: 100%;
@@ -168,7 +169,7 @@ const addBill = () => {
   width: 100rpx;
   height: 100rpx;
   border-radius: 100%;
-  background-color: skyblue;
+  background-color: #4cd964;
 }
 
 .drawer {
@@ -199,9 +200,19 @@ const addBill = () => {
 }
 
 .content {
+  .banner {
+    margin: 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 140rpx;
+    border: 2rpx solid;
+    border-radius: 20rpx;
+  }
   .action-item {
     padding: 20rpx;
     height: 80rpx;
+    border-bottom: 2rpx solid #eee;
   }
 }
 </style>
