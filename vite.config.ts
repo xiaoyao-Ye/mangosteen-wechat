@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     uni(),
     AutoImport({
-      imports: ['vue'],
+      imports: ['vue', 'uni-app'],
       dts: 'src/auto-imports.d.ts',
     }),
     // Components({

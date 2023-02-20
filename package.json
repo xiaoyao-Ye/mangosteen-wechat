@@ -65,7 +65,7 @@
     "@dcloudio/uni-stacktracey": "3.0.0-alpha-3060320220919001",
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3060320220919001",
     "@release-it/conventional-changelog": "^5.0.0",
-    "@types/node": "^18.7.18",
+    "@types/node": "^18.8.0",
     "git-cz": "^4.9.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
