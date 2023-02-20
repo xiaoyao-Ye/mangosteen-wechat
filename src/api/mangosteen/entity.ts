@@ -19,11 +19,11 @@ export class WeChatDto {
 export class WeChatVo {
   /** token */
   token?: string
-  /** 状态码 */
-  statusCode?: string
 }
 
 export class TagDto {
+  /** id */
+  id?: number
   /** 标签名 */
   name?: string
   /** 标签符号 */

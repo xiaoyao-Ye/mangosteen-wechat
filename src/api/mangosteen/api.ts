@@ -18,7 +18,7 @@ export class Auth {
     })
   }
 
-  /** 登录_微信授权登录 */
+  /** 登录-微信授权登录 */
   static login(data?: WeChatDto) {
     return request<WeChatVo>({
       url: `/api/v1/auth/login`,

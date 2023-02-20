@@ -15,7 +15,8 @@ const axiosCanceler = new AxiosCanceler()
 const config = {
   // 默认地址
   // baseURL: 'http://yeyaoyao.icu',
-  baseURL: 'http://localhost:3000',
+  // baseURL: 'http://localhost:3000',
+  baseURL: 'http://127.0.0.1:3000',
   // 设置请求超时时间
   timeout: 10000,
   // 跨域的时候允许携带凭证
