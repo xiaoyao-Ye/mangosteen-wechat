@@ -1,8 +1,8 @@
 <template>
   <view class="container">
     <view class="head">
-      <view> 11 </view>
-      <view>xxxxx</view>
+      <view> icon </view>
+      <view>山竹记账</view>
     </view>
     <view class="content">
       <swiper class="swiper" :current="current" @change="change">
@@ -57,6 +57,12 @@ const start = () => {
   width: 100vw;
   height: 100vh;
   background-color: skyblue;
+  .head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .content {
     border-radius: 20rpx;
     background-color: #fff;
