@@ -21,9 +21,17 @@ export class WeChatVo {
   token?: string
 }
 
-export class TagDto {
+export class TagItemsVo {
   /** id */
   id?: number
+  /** 创建时间 */
+  createdAt?: string
+  /** 更新时间 */
+  updatedAt?: string
+  /** 软删除时间 */
+  deletedAt?: string
+
+  type?: TagType
   /** 标签名 */
   name?: string
   /** 标签符号 */
@@ -32,9 +40,17 @@ export class TagDto {
 
 export class TagVo {
   /** 列表 */
-  items?: Array<TagDto>
+  items?: Array<TagItemsVo>
   /** 总数量 */
   total?: number
+}
+
+export class TagDto {
+  type?: TagType
+  /** 标签名 */
+  name?: string
+  /** 标签符号 */
+  sign?: string
 }
 
 export class BillDto {
@@ -44,4 +60,9 @@ export class BillDto {
   tagIds?: Array<string>
   /** 收支类型 */
   type?: string
+}
+
+export enum TagType {
+  '收入' = '收入',
+  '支出' = '支出',
 }

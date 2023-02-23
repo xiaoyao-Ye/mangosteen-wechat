@@ -48,7 +48,7 @@ export class Tags {
   static updateTag(path: { id: number }, data?: TagDto) {
     return request<void>({
       url: `/api/v1/tags/${path.id}`,
-      method: 'PATCH',
+      method: 'PUT',
       data: data,
     })
   }
