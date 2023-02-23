@@ -9,5 +9,7 @@ A miniProgram
 
 ## todo
 
+- [ ] unplugin-vue-components
 - [ ] unocss
 - [ ] 路由守卫(拦截未登录)
+- [ ] 请求时 loading 状态
