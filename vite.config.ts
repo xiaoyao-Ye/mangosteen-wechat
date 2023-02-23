@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import uni from '@dcloudio/vite-plugin-uni'
 import AutoImport from 'unplugin-auto-import/vite'
+import path from 'node:path'
 // import Components from 'unplugin-vue-components/vite'
 // import { VantResolver } from 'unplugin-vue-components/resolvers'
 // import Unocss from 'unocss/vite'
@@ -28,4 +29,14 @@ export default defineConfig({
     // ],
     // }),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: { additionalData: '@import "@/styles/_variable.scss";' },
+    },
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve('src'),
+    },
+  },
 })
