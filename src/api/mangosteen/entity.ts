@@ -1,24 +1,26 @@
-export class UserDto {
-  /** 邮箱 */
-  email?: string
-  /** 验证码 */
-  code?: string
+export class EmailSignInDto {
+  identity_type?: IdentityType
+  /** 标识符 */
+  identifier?: string
+  /** 凭证 */
+  credential?: string
 }
 
-export class WeChatDto {
+export class SignInVo {
+  /** token */
+  token?: string
+}
+
+export class WeChatSignInDto {
+  identity_type?: IdentityType
   /** 昵称 */
   nickName?: string
   /** 头像 */
   avatar?: string
   /** 性别 */
   gender?: string
-  /** 用户登录凭证 */
+  /** 微信用户登录凭证 */
   code?: string
-}
-
-export class WeChatVo {
-  /** token */
-  token?: string
 }
 
 export class TagItemsVo {
@@ -31,11 +33,16 @@ export class TagItemsVo {
   /** 软删除时间 */
   deletedAt?: string
 
-  type?: TagType
+  category?: Category
   /** 标签名 */
   name?: string
   /** 标签符号 */
   sign?: string
+}
+
+export class TagListVo {
+  /** 列表 */
+  items?: Array<TagItemsVo>
 }
 
 export class TagVo {
@@ -46,7 +53,7 @@ export class TagVo {
 }
 
 export class TagDto {
-  type?: TagType
+  category?: Category
   /** 标签名 */
   name?: string
   /** 标签符号 */
@@ -56,13 +63,18 @@ export class TagDto {
 export class BillDto {
   /** 金额 */
   amount?: number
-  /** 标签列表 */
-  tagIds?: Array<string>
-  /** 收支类型 */
-  type?: string
+
+  category?: Category
+  /** 标签Id */
+  tagId?: number
 }
 
-export enum TagType {
+export enum IdentityType {
+  '邮箱' = '邮箱',
+  '微信' = '微信',
+}
+
+export enum Category {
   '收入' = '收入',
   '支出' = '支出',
 }

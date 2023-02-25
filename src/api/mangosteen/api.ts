@@ -1,29 +1,31 @@
 import { request } from '../index'
-import { UserDto, WeChatDto, WeChatVo, TagVo, TagDto, BillDto } from './entity'
+import { EmailSignInDto, SignInVo, WeChatSignInDto, TagListVo, TagVo, TagDto, BillDto } from './entity'
 
 export class Auth {
-  static signIn(data?: UserDto) {
-    return request<void>({
-      url: `/api/v1/auth/signIn`,
-      method: 'POST',
-      data: data,
-    })
-  }
-
-  static sendEmail(data?: UserDto) {
-    return request<void>({
-      url: `/api/v1/auth/signUp`,
+  /** 登录-邮箱登录 */
+  static emailSignIn(data?: EmailSignInDto) {
+    return request<SignInVo>({
+      url: `/api/v1/auth/emailSignIn`,
       method: 'POST',
       data: data,
     })
   }
 
   /** 登录-微信授权登录 */
-  static login(data?: WeChatDto) {
-    return request<WeChatVo>({
-      url: `/api/v1/auth/login`,
+  static weChatSignIn(data?: WeChatSignInDto) {
+    return request<SignInVo>({
+      url: `/api/v1/auth/weChatSignIn`,
       method: 'POST',
       data: data,
+    })
+  }
+}
+
+export class User {
+  static getTags() {
+    return request<TagListVo>({
+      url: `/api/v1/user/tags`,
+      method: 'GET',
     })
   }
 }
@@ -83,6 +85,17 @@ export class Bill {
       url: `/api/v1/bill/summary`,
       method: 'GET',
       params: params,
+    })
+  }
+}
+
+export class Email {
+  /** 发送验证码-发送验证码到指定邮箱 */
+  static sendEmail(data?: EmailSignInDto) {
+    return request<void>({
+      url: `/api/v1/email/signUp`,
+      method: 'POST',
+      data: data,
     })
   }
 }
