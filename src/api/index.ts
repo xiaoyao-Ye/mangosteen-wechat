@@ -3,7 +3,7 @@ import axios, { AxiosError, AxiosInstance, AxiosPromise, AxiosRequestConfig, Axi
 import { AxiosCanceler } from './helper/axiosCancel'
 import { checkStatus } from './helper/checkStatus'
 import { Method } from './helper/types'
-// import { showFullScreenLoading, tryHideFullScreenLoading } from './helper/loading'
+import { showFullScreenLoading, tryHideFullScreenLoading } from './helper/loading'
 // import { ElMessage } from 'element-plus'
 import settle from 'axios/lib/core/settle'
 import buildURL from 'axios/lib/helpers/buildURL'
@@ -57,13 +57,14 @@ const service = axios.create(config)
 
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    // showFullScreenLoading()
+    showFullScreenLoading()
     // * 将当前请求添加到 pending 中
     axiosCanceler.addPending(config)
     const getToken = () => uni.getStorageSync(TOKEN)
     return { ...config, headers: { Authorization: `Bearer ${getToken()}` } }
   },
   (error: AxiosError) => {
+    tryHideFullScreenLoading()
     return Promise.reject(error)
   },
 )
@@ -75,7 +76,7 @@ service.interceptors.response.use(
     if (!data) return Promise.reject(new Error(statusText))
     // * 在请求结束后，移除本次请求，并关闭请求 loading
     axiosCanceler.removePending(config)
-    // tryHideFullScreenLoading()
+    tryHideFullScreenLoading()
     console.log('response', response)
     // TODO:
     // 2xx以外的status都需要在error拦截里处理
@@ -94,7 +95,7 @@ service.interceptors.response.use(
   },
   (error: AxiosError) => {
     // 超出 2xx 范围的状态码都会触发该函数。
-    // tryHideFullScreenLoading()
+    tryHideFullScreenLoading()
     const { response, request, message } = error
     if (response) {
       // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
@@ -102,7 +103,8 @@ service.interceptors.response.use(
       // console.log(response.status)
       // console.log(response.headers)
       // 根据响应的错误状态码, 做不同的处理
-      if (response) return checkStatus(response.status, message)
+      // if (response) return checkStatus(response.status, message)
+      return checkStatus(response.status, (response.data as any)?.message ?? message)
     } else if (request) {
       // 请求已经成功发起，但没有收到响应
       // 服务器结果都没有返回(可能服务器错误可能客户端断网), 断网处理: 可以跳转到断网页面
