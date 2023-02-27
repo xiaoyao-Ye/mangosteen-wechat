@@ -1,29 +1,24 @@
 <template>
   <view class="container">
     <view class="head">
-      <view> icon </view>
-      <view>山竹记账</view>
+      <image src="@/static/蘑菇.png"> </image>
+      <view>蘑菇记账</view>
     </view>
     <view class="content">
       <swiper class="swiper" :current="current" @change="change">
-        <swiper-item>
-          <view class="swiper-item">A</view>
-        </swiper-item>
-        <swiper-item>
-          <view class="swiper-item">B</view>
-        </swiper-item>
-        <swiper-item>
-          <view class="swiper-item">C</view>
-        </swiper-item>
-        <swiper-item>
-          <view class="swiper-item">D</view>
+        <swiper-item v-for="item in swiperList" :key="item.title[0]">
+          <view class="swiper-item">
+            <image :src="item.icon"></image>
+            <view>{{ item.title[0] }}</view>
+            <view>{{ item.title[1] }}</view>
+          </view>
         </swiper-item>
       </swiper>
     </view>
     <view class="footer">
       <view></view>
-      <view @click="next">{{ startApp ? 'start' : 'next' }}</view>
-      <view @click="start">{{ startApp ? '' : 'start' }}</view>
+      <view @click="next">{{ startApp ? '开启应用' : '下一页' }}</view>
+      <view @click="start">{{ startApp ? '' : '跳过' }}</view>
     </view>
   </view>
 </template>
@@ -37,6 +32,13 @@ const startApp = computed(() => current.value >= 3)
 const change = (e: any) => {
   current.value = e.detail.current
 }
+
+const swiperList = [
+  { icon: '../../static/小猪存钱罐.png', title: ['会挣钱', '还要会省钱'] },
+  { icon: '../../static/闹钟.png', title: ['每日提醒', '不会遗漏每一笔账单'] },
+  { icon: '../../static/数据表格.png', title: ['数据可视化', '收支一目了然'] },
+  { icon: '../../static/天气云朵.png', title: ['云备份', '再也不怕数据丢失'] },
+]
 
 const next = () => {
   console.log('startApp', startApp)
@@ -56,14 +58,23 @@ const start = () => {
   padding: 100rpx 20rpx;
   width: 100vw;
   height: 100vh;
-  background-color: skyblue;
+  font-size: 38rpx;
+  font-weight: bold;
+  color: white;
+  background-color: $primary-color;
   .head {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    image {
+      margin-bottom: 20rpx;
+      width: 110.5rpx;
+      height: 100rpx;
+    }
   }
   .content {
+    color: black;
     border-radius: 20rpx;
     background-color: #fff;
   }
@@ -80,9 +91,29 @@ const start = () => {
 
 .swiper {
   height: 100%;
+  &-item {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    > image {
+      width: 200rpx;
+      height: 200rpx;
+    }
+    > view:nth-child(2) {
+      margin: 40rpx 0 20rpx;
+    }
+  }
 }
-.swiper-item {
-  height: 100%;
-  text-align: center;
+swiper-item {
+  &:nth-child(2) image {
+    width: 180rpx;
+    height: 180rpx;
+  }
+  &:nth-child(1) image {
+    margin-left: 40rpx;
+    width: 342rpx;
+  }
 }
 </style>

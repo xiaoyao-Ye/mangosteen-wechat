@@ -19,9 +19,12 @@
 
 <script setup lang="ts">
 import { Auth } from '../../api/mangosteen/api'
+import { IdentityType } from '../../api/mangosteen/entity'
 import { TOKEN, USER_INFO } from '../../config/storage_key'
 
 const login = () => {
+  // 2022-05-10 :目前小程序开发者可以通过 wx.login 接口直接获取用户的 openId 与 unionId 信息，实现微信身份登录。对许多小程序使用场景，用户无需提供头像昵称。
+  // 如有必要场景需收集用户头像昵称，可在个人中心或设置等页面让用户完善个人资料。
   uni.getUserProfile({
     desc: 'Ghosteye welcome!',
     success: (user) => {
@@ -32,8 +35,8 @@ const login = () => {
       uni.login({
         success: async ({ code }) => {
           try {
-            const data = { code, nickName, avatar, gender }
-            const { token } = await Auth.login(data)
+            const data = { code, nickName, avatar, gender, identity_type: IdentityType.微信 }
+            const { token } = await Auth.weChatSignIn(data)
             uni.setStorageSync(TOKEN, token ?? '')
             uni.redirectTo({ url: '/pages/layout/index' })
             console.log('result', token)

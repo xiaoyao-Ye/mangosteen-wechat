@@ -20,13 +20,17 @@
 <script setup lang="ts">
 const props = defineProps<{
   amount: number
+  /** dateTime */
+  dateTime: string
   onSubmit: () => void
 }>()
 const emit = defineEmits<{
   (e: 'update:amount', value: number): void
+  (e: 'update:dateTime', value: string): void
 }>()
 
-const refAmount = ref(props.amount ? (props.amount / 100).toString() : '0')
+const refAmount = ref(props.amount ? props.amount.toString() : '0')
+// const refAmount = ref(props.amount ? (props.amount / 100).toString() : '0')
 const appendText = (text: string) => {
   const dotIndex = refAmount.value.indexOf('.')
   if (refAmount.value.length >= 13) return
@@ -54,9 +58,10 @@ const appendText = (text: string) => {
 }
 const keyDown = (text: string) => {
   if (text === '提交') {
-    emit('update:amount', parseFloat(refAmount.value) * 100)
+    // emit('update:amount', parseFloat(refAmount.value) * 100) // 没能理解为什么 * 100
+    emit('update:amount', parseFloat(refAmount.value))
     props.onSubmit?.()
-    uni.navigateBack()
+    // uni.navigateBack()
     return
   }
   if (text === '清空') {
@@ -87,10 +92,11 @@ const dateTimePicker = () => {
   datetime.value.show()
 }
 const datetime = ref()
-const createAt = ref()
-const currentDate = ref<string[]>([]) // 当前选中的日期
-const datetimeChange = (val: string[]) => {
+const createAt = ref(props.dateTime)
+// const currentDate = ref<string[]>([]) // 当前选中的日期
+const datetimeChange = (val: string) => {
   console.log('val', val)
+  emit('update:dateTime', val)
   // currentDate.value = formatDateRange(val)
 }
 </script>

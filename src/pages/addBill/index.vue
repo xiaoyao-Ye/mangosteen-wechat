@@ -9,32 +9,40 @@
 
     <uni-segmented-control
       :current="current"
-      :values="['支出', '收入']"
+      :values="tabs"
       @clickItem="tabChange"
       styleType="text"
-      activeColor="#4cd964"
+      activeColor="skyblue"
     ></uni-segmented-control>
 
     <view class="tagList">
       <view class="addEmoji tagList-item" @click="addEmoji">
-        <uni-icons type="plusempty" size="24" color="#4cd964"></uni-icons>
-        <text>添加标签</text>
+        <uni-icons type="plusempty" size="24" color="skyblue"></uni-icons>
+        <text>{{ tabs[current] }}标签</text>
       </view>
-      <view class="tagList-item" v-for="tag in tagList" :key="tag.id">
+      <view
+        :class="['tagList-item', selectedId === tag.id && 'tagList-active']"
+        v-for="tag in activeList"
+        :key="tag.id"
+        @click="selectTag(tag)"
+        @longtap="editTag(tag)"
+      >
         <text>{{ tag.sign }}</text>
         <text>{{ tag.name }}</text>
       </view>
     </view>
 
-    <KeyBoard :onSubmit="onSubmit" v-model:amount="amount" />
+    <KeyBoard :onSubmit="onSubmit" v-model:amount="amount" v-model:dateTime="dateTime" />
   </view>
 </template>
 
 <script setup lang="ts">
 import NavBar from '../../components/NavBar/index.vue'
 import KeyBoard from '../../components/KeyBoard/index.vue'
-import { Tags } from '../../api/mangosteen/api'
-import { TagDto } from '../../api/mangosteen/entity'
+import { Bill, Tags } from '../../api/mangosteen/api'
+// import { User } from '../../api/mangosteen/api'
+import { Category, TagItemsVo } from '../../api/mangosteen/entity'
+import { formatDate } from '../../utils/dayjs'
 
 const back = () => {
   uni.navigateBack()
@@ -42,27 +50,57 @@ const back = () => {
 
 const isEdit = ref(false)
 
+const tabs = ['支出', '收入'] as const
 const current = ref<number>(0)
-const tabChange = (e: any) => {}
+const tabChange = (e: any) => {
+  current.value = e.currentIndex
+}
 
 const addEmoji = () => {
-  uni.navigateTo({ url: '/pages/addEmoji/index' })
+  uni.navigateTo({ url: `/pages/addEmoji/index?category=${tabs[current.value]}` })
 }
 
-const tagList = ref<TagDto[]>([])
+const tagList = ref<TagItemsVo[]>([])
+const activeList = ref<TagItemsVo[]>([])
+watchEffect(() => {
+  activeList.value = tagList.value.filter((item) => item.category === tabs[current.value])
+  console.log('activeList', activeList.value)
+})
+const selectedId = ref<number>()
+const selectTag = (tag: TagItemsVo) => {
+  selectedId.value = tag.id
+}
+const editTag = (tag: TagItemsVo) => {
+  const { id, name, sign } = tag
+  uni.navigateTo({ url: `/pages/addEmoji/index?category=${tabs[current.value]}&id=${id}&name=${name}&sign=${sign}` })
+}
+
 const getList = async () => {
-  const params = {
-    page: 1,
-    pageSize: 10,
-  }
-  const { items, total } = await Tags.getTags(params)
+  const { items } = await Tags.getAllTags()
   tagList.value = items ?? []
 }
-getList()
 
-const amount = ref()
+onShow(() => {
+  console.log('onShow..')
+  getList()
+})
+
+const dateTime = ref(formatDate())
+const amount = ref(0)
 // const errors = reactive<FormErrors<typeof formData>>({ kind: [], tag_ids: [], amount: [], happen_at: [] })
 const onSubmit = async () => {
+  if (!selectedId.value) return uni.showToast({ title: '请选择标签', icon: 'none' })
+  if (!amount.value) return uni.showToast({ title: '输入金额', icon: 'none' })
+  console.log(amount.value)
+  console.log(selectedId.value)
+  console.log(dateTime.value)
+  await Bill.createBill({
+    amount: amount.value,
+    tagId: selectedId.value,
+    record_date: dateTime.value,
+    category: tabs[current.value] as Category,
+  })
+  back()
   // Object.assign(errors, { kind: [], tag_ids: [], amount: [], happen_at: [] })
   // Object.assign(
   //   errors,
@@ -106,7 +144,7 @@ const onSubmit = async () => {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    color: #4cd964;
+    color: $primary-color;
   }
   &-item {
     padding: 0 10rpx;
@@ -115,6 +153,9 @@ const onSubmit = async () => {
     border-radius: 12rpx;
     border: 2rpx solid #eee;
     // box-shadow: 0 0 4rpx 2rpx skyblue;
+  }
+  &-active {
+    background-color: $primary-color;
   }
 }
 </style>

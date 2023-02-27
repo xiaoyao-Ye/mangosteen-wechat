@@ -3,7 +3,7 @@
     <NavBar :show-height="true" background="transparent">
       <view class="navBar">
         <uni-icons type="list" size="28" style="margin-right: 20rpx" @click="showDrawer"></uni-icons>
-        <text>呵呵</text>
+        <text>蘑菇记账</text>
       </view>
     </NavBar>
 
@@ -12,16 +12,25 @@
       :values="['本月', '上月', '今年', '选择时间段']"
       @clickItem="tabChange"
       styleType="text"
-      activeColor="#4cd964"
+      activeColor="skyblue"
     ></uni-segmented-control>
 
     <view class="content">
       <view v-if="!currentDate.length">请选择时间</view>
       <view v-else>
         <view class="banner">
-          <view>z</view>
-          <view>s</view>
-          <view>z</view>
+          <view>
+            <view>支出</view>
+            <view>128</view>
+          </view>
+          <view>
+            <view>收入</view>
+            <view>128</view>
+          </view>
+          <view>
+            <view>净收入</view>
+            <view>128</view>
+          </view>
         </view>
         <uni-swipe-action>
           <uni-swipe-action-item
@@ -55,7 +64,8 @@
         </view>
         <view class="menuList">
           <view v-for="menu in menuList" :key="menu.name" @click="menuHandle(menu)">
-            <uni-icons :type="menu.icon" size="32"></uni-icons>
+            <!-- <uni-icons :type="menu.icon" size="32"></uni-icons> -->
+            <image :src="menu.icon"></image>
             <text>{{ menu.name }}</text>
           </view>
         </view>
@@ -69,11 +79,12 @@ import NavBar from '../../components/NavBar/index.vue'
 import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMonthRange } from '../../utils/dayjs'
 
 import { IS_LAUNCH, TOKEN, USER_INFO } from '../../config/storage_key'
+import { Bill } from '../../api/mangosteen/api'
 
 const isLaunch = uni.getStorageSync(IS_LAUNCH)
 if (!isLaunch) uni.redirectTo({ url: '/pages/index/index' })
 
-const userInfo = uni.getStorageSync(USER_INFO) ?? {}
+const userInfo = uni.getStorageSync(USER_INFO) || { avatar: '../../static/蘑菇.png' }
 const token = uni.getStorageSync(TOKEN) ?? {}
 
 const loginAndLogout = () => {
@@ -89,14 +100,21 @@ const showDrawer = () => {
   drawer.value.open()
 }
 
-const menuList = ref([
-  { name: 'menu1', icon: 'settings' },
-  { name: 'menu2', icon: 'medal' },
-  { name: 'menu3', icon: 'vip' },
-  { name: 'menu4', icon: 'paperclip' },
-])
+const menuList = [
+  { name: '记账', icon: '../../static/蘑菇.png' },
+  { name: '统计图表', icon: '../../static/蘑菇.png' },
+  { name: '导出数据', icon: '../../static/蘑菇.png' },
+  { name: '记账提醒', icon: '../../static/蘑菇.png' },
+]
 const menuHandle = (menu: any) => {
-  uni.showToast({ title: menu.name, icon: 'none' })
+  if (menu.name !== '记账') return uni.showToast({ title: '敬请期待', icon: 'none' })
+  drawer.value.close()
+}
+
+const tactics: { [key: number]: any } = {
+  0: getCurrentMonthRange,
+  1: getLastMonthRange,
+  2: getCurrentYearRange,
 }
 
 const current = ref<number>(0)
@@ -109,18 +127,19 @@ const tabChange = (e: any) => {
   }
   if (current.value === e.currentIndex) return
   current.value = e.currentIndex
-
-  const obj: { [key: number]: any } = {
-    0: getCurrentMonthRange,
-    1: getLastMonthRange,
-    2: getCurrentYearRange,
-  }
-  currentDate.value = obj[current.value]()
+  currentDate.value = tactics[current.value]()
   getList()
 }
 
 const getList = async () => {
   console.log('currentDate', currentDate.value)
+  await Bill.queryPageBills({
+    pageNum: 1,
+    pageSize: 10,
+    startTime: currentDate.value[0],
+    endTime: currentDate.value[1],
+  })
+
   try {
     // const res = await axios({ url: '/api/v1/tags', method: 'GET' })
     // console.log({ res })
@@ -144,6 +163,11 @@ const swipeActionOptions = [
 const swipeClick = (e: any, index: number) => {
   console.log('点击了' + (e.position === 'left' ? '左侧' : '右侧') + e.content.text + '按钮' + index)
 }
+
+onShow(() => {
+  currentDate.value = tactics[current.value]()
+  getList()
+})
 
 const addBill = () => {
   // uni.showToast({ title: 'addBill', icon: 'none' })
@@ -169,7 +193,7 @@ const addBill = () => {
   width: 100rpx;
   height: 100rpx;
   border-radius: 100%;
-  background-color: #4cd964;
+  background-color: $primary-color;
 }
 
 .drawer {
@@ -177,7 +201,8 @@ const addBill = () => {
     padding-bottom: 20rpx;
     padding-top: 120rpx;
     text-align: center;
-    background-color: skyblue;
+    color: white;
+    background-color: $primary-color;
     .avatar {
       margin: 0 auto;
       width: 150rpx;
@@ -193,8 +218,14 @@ const addBill = () => {
   .menuList {
     padding: 20rpx;
     > view {
+      height: 80rpx;
       display: flex;
       align-items: center;
+    }
+    image {
+      width: 60rpx;
+      height: 60rpx;
+      margin-right: 20rpx;
     }
   }
 }
@@ -205,6 +236,7 @@ const addBill = () => {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    text-align: center;
     height: 140rpx;
     border: 2rpx solid;
     border-radius: 20rpx;
