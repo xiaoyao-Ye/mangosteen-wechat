@@ -1,5 +1,14 @@
 import { request } from '../index'
-import { EmailSignInDto, SignInVo, WeChatSignInDto, TagListVo, TagVo, TagDto, BillDto } from './entity'
+import {
+  EmailSignInDto,
+  SignInVo,
+  WeChatSignInDto,
+  TagListVo,
+  TagDto,
+  QueryBillsDto,
+  QueryBillsVo,
+  CreateBillDto,
+} from './entity'
 
 export class Auth {
   /** 登录-邮箱登录 */
@@ -21,24 +30,16 @@ export class Auth {
   }
 }
 
-export class User {
-  static getTags() {
-    return request<TagListVo>({
-      url: `/api/v1/user/tags`,
-      method: 'GET',
-    })
-  }
-}
-
 export class Tags {
-  static getTags(params?: { pageNum?: number; pageSize?: number }) {
-    return request<TagVo>({
-      url: `/api/v1/tags`,
+  /** 标签列表-获取当前请求用户的所有标签 */
+  static getAllTags() {
+    return request<TagListVo>({
+      url: `/api/v1/tags/getAll`,
       method: 'GET',
-      params: params,
     })
   }
 
+  /** 创建标签 */
   static createTag(data?: TagDto) {
     return request<void>({
       url: `/api/v1/tags`,
@@ -47,6 +48,7 @@ export class Tags {
     })
   }
 
+  /** 修改标签 */
   static updateTag(path: { id: number }, data?: TagDto) {
     return request<void>({
       url: `/api/v1/tags/${path.id}`,
@@ -55,6 +57,7 @@ export class Tags {
     })
   }
 
+  /** 删除标签 */
   static deleteTag(path: { id: number }) {
     return request<void>({
       url: `/api/v1/tags/${path.id}`,
@@ -64,15 +67,17 @@ export class Tags {
 }
 
 export class Bill {
-  static getBills(params?: { pageNum?: number; pageSize?: number }) {
-    return request<void>({
-      url: `/api/v1/bill`,
-      method: 'GET',
-      params: params,
+  /** 查询记账-查询当前用户账单记录 */
+  static queryPageBills(data?: QueryBillsDto) {
+    return request<QueryBillsVo>({
+      url: `/api/v1/bill/queryPage`,
+      method: 'POST',
+      data: data,
     })
   }
 
-  static createBill(data?: BillDto) {
+  /** 创建记账-创建一个账单记录 */
+  static createBill(data?: CreateBillDto) {
     return request<void>({
       url: `/api/v1/bill`,
       method: 'POST',
@@ -80,11 +85,20 @@ export class Bill {
     })
   }
 
-  static getBillSummary(params?: { pageNum?: number; pageSize?: number }) {
+  /** 修改记账 */
+  static updateBill(path: { id: number }, data?: CreateBillDto) {
     return request<void>({
-      url: `/api/v1/bill/summary`,
-      method: 'GET',
-      params: params,
+      url: `/api/v1/bill/${path.id}`,
+      method: 'PUT',
+      data: data,
+    })
+  }
+
+  /** 删除记账 */
+  static deleteBill(path: { id: number }) {
+    return request<void>({
+      url: `/api/v1/bill/${path.id}`,
+      method: 'DELETE',
     })
   }
 }
