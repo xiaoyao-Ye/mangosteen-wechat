@@ -27,9 +27,9 @@ export class TagItemsVo {
   /** id */
   id?: number
   /** 创建时间 */
-  createdAt?: string
+  created_at?: string
   /** 更新时间 */
-  updatedAt?: string
+  updated_at?: string
   /** 软删除时间 */
   deleted_at?: string
 
@@ -72,9 +72,9 @@ export class BillItemsVo {
   /** id */
   id?: number
   /** 创建时间 */
-  createdAt?: string
+  created_at?: string
   /** 更新时间 */
-  updatedAt?: string
+  updated_at?: string
   /** 软删除时间 */
   deleted_at?: string
   /** 用户ID */
@@ -83,8 +83,10 @@ export class BillItemsVo {
   tagId?: number
   /** 金额 */
   amount?: number
+  /** 创建日期 */
+  record_date?: string
   /** 标签信息: TODO: TagItemsVo 类型 */
-  tag?: any
+  tag?: TagItemsVo
 }
 
 export class QueryBillsVo {
