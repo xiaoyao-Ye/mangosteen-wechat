@@ -13,7 +13,10 @@
       <view></view>
       <view></view>
     </view>
-    <view class="submit" @click="login">login</view>
+    <view class="main">
+      <view @click="login">login</view>
+      <view @click="tryOut">try out</view>
+    </view>
   </view>
 </template>
 
@@ -51,21 +54,37 @@ const login = () => {
     },
   })
 }
+
+/** admin 公共测试账号 */
+const tryOut = async () => {
+  const { token } = await Auth.emailSignIn({
+    identity_type: IdentityType.邮箱,
+    identifier: 'admin@Ghosteye.com',
+    credential: '123456',
+  })
+  uni.setStorageSync(TOKEN, token ?? '')
+  uni.redirectTo({ url: '/pages/index/index' })
+}
 </script>
 
 <style lang="scss" scoped>
-.submit {
+.main {
   position: fixed;
   top: 50%;
   left: 50%;
-  color: #fff;
-  height: 80rpx;
-  line-height: 80rpx;
   width: 40%;
-  text-align: center;
-  border: 2rpx dashed;
-  border-radius: 8rpx;
   transform: translate(-50%, -50%);
+  > view {
+    color: #fff;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    border: 2rpx dashed;
+    border-radius: 8rpx;
+    &:nth-child(1) {
+      margin-bottom: 20rpx;
+    }
+  }
 }
 
 .login {
