@@ -32,7 +32,18 @@
             <view>128</view>
           </view>
         </view>
-        <uni-swipe-action>
+        <view class="itemList">
+          <view v-for="item in billList" :key="item.id">
+            <view class="sign">{{ item.tag?.sign }}</view>
+            <view class="title">{{ item.tag?.name }}</view>
+            <view class="desc">
+              <!-- TODO: 根据标签类型, 支出金额红色, 收入金额绿色 -->
+              <view class="amount">￥{{ item.amount }}</view>
+              <view class="date">{{ item.record_date }}</view>
+            </view>
+          </view>
+        </view>
+        <!-- <uni-swipe-action>
           <uni-swipe-action-item
             v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
             :key="index"
@@ -41,7 +52,7 @@
           >
             <view class="action-item">data {{ index }}</view>
           </uni-swipe-action-item>
-        </uni-swipe-action>
+        </uni-swipe-action> -->
       </view>
     </view>
 
@@ -80,6 +91,7 @@ import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMont
 
 import { IS_LAUNCH, TOKEN, USER_INFO } from '../../config/storage_key'
 import { Bill } from '../../api/mangosteen/api'
+import { BillItemsVo } from '../../api/mangosteen/entity'
 
 const isLaunch = uni.getStorageSync(IS_LAUNCH)
 if (!isLaunch) uni.redirectTo({ url: '/pages/index/index' })
@@ -131,21 +143,16 @@ const tabChange = (e: any) => {
   getList()
 }
 
+const billList = ref<BillItemsVo[]>([])
 const getList = async () => {
   console.log('currentDate', currentDate.value)
-  await Bill.queryPageBills({
+  const { items, total } = await Bill.queryPageBills({
     pageNum: 1,
     pageSize: 10,
     startTime: currentDate.value[0],
     endTime: currentDate.value[1],
   })
-
-  try {
-    // const res = await axios({ url: '/api/v1/tags', method: 'GET' })
-    // console.log({ res })
-  } catch (error) {
-    console.log('error1', error)
-  }
+  billList.value = items ?? []
 }
 
 const daterange = ref()
@@ -156,13 +163,13 @@ const rangeChange = (val: string[]) => {
   getList()
 }
 
-const swipeActionOptions = [
-  { text: '修改', style: { backgroundColor: '#4cd964' } },
-  { text: '删除', style: { backgroundColor: '#F56C6C' } },
-]
-const swipeClick = (e: any, index: number) => {
-  console.log('点击了' + (e.position === 'left' ? '左侧' : '右侧') + e.content.text + '按钮' + index)
-}
+// const swipeActionOptions = [
+//   { text: '修改', style: { backgroundColor: '#4cd964' } },
+//   { text: '删除', style: { backgroundColor: '#F56C6C' } },
+// ]
+// const swipeClick = (e: any, index: number) => {
+//   console.log('点击了' + (e.position === 'left' ? '左侧' : '右侧') + e.content.text + '按钮' + index)
+// }
 
 onShow(() => {
   currentDate.value = tactics[current.value]()
@@ -170,7 +177,6 @@ onShow(() => {
 })
 
 const addBill = () => {
-  // uni.showToast({ title: 'addBill', icon: 'none' })
   uni.navigateTo({ url: '/pages/addBill/index' })
 }
 </script>
@@ -238,13 +244,50 @@ const addBill = () => {
     justify-content: space-around;
     text-align: center;
     height: 140rpx;
-    border: 2rpx solid;
+    // border: 2rpx solid;
     border-radius: 20rpx;
+    background-color: skyblue;
+    color: white;
   }
   .action-item {
     padding: 20rpx;
     height: 80rpx;
     border-bottom: 2rpx solid #eee;
+  }
+  .itemList {
+    padding: 30rpx;
+    > view {
+      display: flex;
+      align-items: center;
+      border-bottom: 2rpx solid skyblue;
+      height: 140rpx;
+      .sign {
+        margin-right: 20rpx;
+        width: 80rpx;
+        height: 80rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100%;
+        background-color: #ccc;
+      }
+      .title {
+        font-weight: bold;
+        font-size: 36rpx;
+      }
+      .desc {
+        flex: 1;
+        text-align: right;
+      }
+      .amount {
+        font-weight: bold;
+        color: #ff6600;
+      }
+      .date {
+        font-size: 28rpx;
+        color: #666;
+      }
+    }
   }
 }
 </style>
