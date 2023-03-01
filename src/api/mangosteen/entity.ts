@@ -1,4 +1,5 @@
 export class EmailSignInDto {
+  /** 身份类型 */
   identity_type?: IdentityType
   /** 标识符 */
   identifier?: string
@@ -12,6 +13,7 @@ export class SignInVo {
 }
 
 export class WeChatSignInDto {
+  /** 身份类型 */
   identity_type?: IdentityType
   /** 昵称 */
   nickName?: string
@@ -32,7 +34,7 @@ export class TagItemsVo {
   updated_at?: string
   /** 软删除时间 */
   deleted_at?: string
-
+  /** 收支类型 */
   category?: Category
   /** 标签名 */
   name?: string
@@ -46,6 +48,7 @@ export class TagListVo {
 }
 
 export class TagDto {
+  /** 收支类型 */
   category?: Category
   /** 标签名 */
   name?: string
@@ -85,7 +88,7 @@ export class BillItemsVo {
   amount?: number
   /** 创建日期 */
   record_date?: string
-  /** 标签信息: TODO: TagItemsVo 类型 */
+  /** 标签信息 */
   tag?: TagItemsVo
 }
 
@@ -103,7 +106,7 @@ export class CreateBillDto {
   tagId?: number
   /** 记账日期 */
   record_date?: string
-
+  /** 收支类型 */
   category?: Category
   /** 用户ID */
   userId?: number
