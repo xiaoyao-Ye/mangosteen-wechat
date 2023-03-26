@@ -54,6 +54,7 @@ const tabs = ['支出', '收入'] as const
 const current = ref<number>(0)
 const tabChange = (e: any) => {
   current.value = e.currentIndex
+  selectedId.value = undefined
 }
 
 const addEmoji = () => {
