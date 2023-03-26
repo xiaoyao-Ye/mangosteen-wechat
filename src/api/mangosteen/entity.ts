@@ -58,6 +58,15 @@ export class TagDto {
   userId?: number
 }
 
+export class BalanceVo {
+  /** 收入 */
+  income?: number
+  /** 支出 */
+  outcome?: number
+  /** 净收入 */
+  netIncome?: number
+}
+
 export class QueryBillsDto {
   /** 分页 */
   pageNum?: number
@@ -88,6 +97,8 @@ export class BillItemsVo {
   amount?: number
   /** 创建日期 */
   record_date?: string
+  /** 收支类型 */
+  category?: string
   /** 标签信息 */
   tag?: TagItemsVo
 }

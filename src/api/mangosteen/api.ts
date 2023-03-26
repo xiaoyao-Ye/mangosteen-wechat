@@ -5,6 +5,7 @@ import {
   WeChatSignInDto,
   TagListVo,
   TagDto,
+  BalanceVo,
   QueryBillsDto,
   QueryBillsVo,
   CreateBillDto,
@@ -67,6 +68,15 @@ export class Tags {
 }
 
 export class Bill {
+  /** 统计信息 */
+  static balance(params?: { startTime?: string; endTime?: string }) {
+    return request<BalanceVo>({
+      url: `/api/v1/bill/balance`,
+      method: 'GET',
+      params: params,
+    })
+  }
+
   /** 查询记账-查询当前用户账单记录 */
   static queryPageBills(data?: QueryBillsDto) {
     return request<QueryBillsVo>({
