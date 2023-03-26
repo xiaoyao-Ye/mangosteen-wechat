@@ -19,17 +19,17 @@
       <view v-if="!currentDate.length">请选择时间</view>
       <view v-else>
         <view class="banner">
-          <view>
-            <view>支出</view>
-            <view>128</view>
-          </view>
-          <view>
+          <view style="color: #ff6600">
             <view>收入</view>
-            <view>128</view>
+            <view>{{ balance.income }}</view>
+          </view>
+          <view style="color: #00ff99">
+            <view>支出</view>
+            <view>{{ balance.outcome }}</view>
           </view>
           <view>
             <view>净收入</view>
-            <view>128</view>
+            <view>{{ balance.netIncome }}</view>
           </view>
         </view>
         <view class="itemList">
@@ -37,8 +37,9 @@
             <view class="sign">{{ item.tag?.sign }}</view>
             <view class="title">{{ item.tag?.name }}</view>
             <view class="desc">
-              <!-- TODO: 根据标签类型, 支出金额红色, 收入金额绿色 -->
-              <view class="amount">￥{{ item.amount }}</view>
+              <view class="amount" :style="{ color: item.tag?.category === '支出' ? '#00ff99' : '#ff6600' }">
+                ￥{{ item.amount }}
+              </view>
               <view class="date">{{ item.record_date }}</view>
             </view>
           </view>
@@ -91,7 +92,7 @@ import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMont
 
 import { IS_LAUNCH, TOKEN, USER_INFO } from '../../config/storage_key'
 import { Bill } from '../../api/mangosteen/api'
-import { BillItemsVo } from '../../api/mangosteen/entity'
+import { BalanceVo, BillItemsVo } from '../../api/mangosteen/entity'
 
 const isLaunch = uni.getStorageSync(IS_LAUNCH)
 if (!isLaunch) uni.redirectTo({ url: '/pages/index/index' })
@@ -141,6 +142,7 @@ const tabChange = (e: any) => {
   current.value = e.currentIndex
   currentDate.value = tactics[current.value]()
   getList()
+  getStatistics()
 }
 
 const billList = ref<BillItemsVo[]>([])
@@ -155,12 +157,22 @@ const getList = async () => {
   billList.value = items ?? []
 }
 
+const balance = ref<BalanceVo>({ income: 0, outcome: 0, netIncome: 0 })
+// 获取统计信息
+const getStatistics = async () => {
+  balance.value = await Bill.balance({
+    startTime: currentDate.value[0],
+    endTime: currentDate.value[1],
+  })
+}
+
 const daterange = ref()
 const range = ref([new Date(), new Date()])
 const currentDate = ref<string[]>([]) // 当前选中的日期
 const rangeChange = (val: string[]) => {
   currentDate.value = formatDateRange(val)
   getList()
+  getStatistics()
 }
 
 // const swipeActionOptions = [
@@ -174,6 +186,7 @@ const rangeChange = (val: string[]) => {
 onShow(() => {
   currentDate.value = tactics[current.value]()
   getList()
+  getStatistics()
 })
 
 const addBill = () => {
@@ -246,7 +259,7 @@ const addBill = () => {
     height: 140rpx;
     // border: 2rpx solid;
     border-radius: 20rpx;
-    background-color: skyblue;
+    background-color: #252a43;
     color: white;
   }
   .action-item {
@@ -255,7 +268,7 @@ const addBill = () => {
     border-bottom: 2rpx solid #eee;
   }
   .itemList {
-    padding: 30rpx;
+    padding: 0 30rpx 30rpx;
     > view {
       display: flex;
       align-items: center;
