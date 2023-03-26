@@ -1,19 +1,48 @@
 <template>
-  <view>
-    <NavBar :show-height="true" background="transparent">
-      <view class="navBar">
-        <uni-icons type="list" size="28" style="margin-right: 20rpx" @click="showDrawer"></uni-icons>
-        <text>蘑菇记账</text>
-      </view>
-    </NavBar>
+  <view class="page">
+    <view>
+      <NavBar :show-height="true" background="transparent">
+        <view class="navBar">
+          <uni-icons type="list" size="28" style="margin-right: 20rpx" @click="showDrawer"></uni-icons>
+          <text>蘑菇记账</text>
+        </view>
+      </NavBar>
 
-    <uni-segmented-control
-      :current="current"
-      :values="['本月', '上月', '今年', '选择时间段']"
-      @clickItem="tabChange"
-      styleType="text"
-      activeColor="skyblue"
-    ></uni-segmented-control>
+      <uni-segmented-control
+        :current="current"
+        :values="['本月', '上月', '今年', '选择时间段']"
+        @clickItem="tabChange"
+        styleType="text"
+        activeColor="skyblue"
+      ></uni-segmented-control>
+
+      <uni-datetime-picker ref="daterange" v-model="range" type="daterange" @change="rangeChange">
+        {{ '' }}
+      </uni-datetime-picker>
+
+      <view class="addBill" @click="addBill">
+        <uni-icons type="plusempty" size="32" color="#fff"></uni-icons>
+      </view>
+
+      <uni-drawer ref="drawer" mode="left">
+        <view class="drawer">
+          <view class="head" @click="loginAndLogout">
+            <view class="avatar">
+              <image :src="userInfo.avatar"></image>
+            </view>
+            <view>{{ userInfo.nickName ? userInfo.nickName : '未登录用户' }}</view>
+            <view>{{ token ? '注销' : '点击进行登录' }}</view>
+          </view>
+          <view class="menuList">
+            <view v-for="menu in menuList" :key="menu.name" @click="menuHandle(menu)">
+              <!-- <uni-icons :type="menu.icon" size="32"></uni-icons> -->
+              <image :src="menu.icon"></image>
+              <text>{{ menu.name }}</text>
+            </view>
+          </view>
+        </view>
+      </uni-drawer>
+    </view>
 
     <view class="content">
       <view v-if="!currentDate.length">请选择时间</view>
@@ -43,6 +72,10 @@
               <view class="date">{{ item.record_date }}</view>
             </view>
           </view>
+          <view style="justify-content: center; color: teal" @click="loadMore">
+            <view v-show="hasMore">不要停，继续往下看</view>
+            <view v-show="!hasMore">已经到底啦，换个方向看看吧</view>
+          </view>
         </view>
         <!-- <uni-swipe-action>
           <uni-swipe-action-item
@@ -56,33 +89,6 @@
         </uni-swipe-action> -->
       </view>
     </view>
-
-    <uni-datetime-picker ref="daterange" v-model="range" type="daterange" @change="rangeChange">
-      {{ '' }}
-    </uni-datetime-picker>
-
-    <view class="addBill" @click="addBill">
-      <uni-icons type="plusempty" size="32" color="#fff"></uni-icons>
-    </view>
-
-    <uni-drawer ref="drawer" mode="left">
-      <view class="drawer">
-        <view class="head" @click="loginAndLogout">
-          <view class="avatar">
-            <image :src="userInfo.avatar"></image>
-          </view>
-          <view>{{ userInfo.nickName ? userInfo.nickName : '未登录用户' }}</view>
-          <view>{{ token ? '注销' : '点击进行登录' }}</view>
-        </view>
-        <view class="menuList">
-          <view v-for="menu in menuList" :key="menu.name" @click="menuHandle(menu)">
-            <!-- <uni-icons :type="menu.icon" size="32"></uni-icons> -->
-            <image :src="menu.icon"></image>
-            <text>{{ menu.name }}</text>
-          </view>
-        </view>
-      </view>
-    </uni-drawer>
   </view>
 </template>
 
@@ -141,20 +147,31 @@ const tabChange = (e: any) => {
   if (current.value === e.currentIndex) return
   current.value = e.currentIndex
   currentDate.value = tactics[current.value]()
+
+  page.value.pageNum = 1
+  billList.value.length = 0
   getList()
   getStatistics()
 }
 
+const page = ref({ pageNum: 1, pageSize: 10 })
 const billList = ref<BillItemsVo[]>([])
 const getList = async () => {
   console.log('currentDate', currentDate.value)
   const { items, total } = await Bill.queryPageBills({
-    pageNum: 1,
-    pageSize: 10,
+    pageNum: page.value.pageNum,
+    pageSize: page.value.pageSize,
     startTime: currentDate.value[0],
     endTime: currentDate.value[1],
   })
-  billList.value = items ?? []
+  billList.value.push(...(items ?? []))
+  hasMore.value = page.value.pageNum * page.value.pageSize < total!
+}
+const hasMore = ref(false)
+const loadMore = () => {
+  if (!hasMore.value) return
+  page.value.pageNum++
+  getList()
 }
 
 const balance = ref<BalanceVo>({ income: 0, outcome: 0, netIncome: 0 })
@@ -171,6 +188,9 @@ const range = ref([new Date(), new Date()])
 const currentDate = ref<string[]>([]) // 当前选中的日期
 const rangeChange = (val: string[]) => {
   currentDate.value = formatDateRange(val)
+
+  page.value.pageNum = 1
+  billList.value.length = 0
   getList()
   getStatistics()
 }
@@ -195,6 +215,11 @@ const addBill = () => {
 </script>
 
 <style lang="scss" scoped>
+.page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 .navBar {
   padding: 0 20rpx;
   display: flex;
@@ -250,8 +275,11 @@ const addBill = () => {
 }
 
 .content {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 30rpx;
   .banner {
-    margin: 30rpx;
+    margin-bottom: 30rpx;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -268,7 +296,6 @@ const addBill = () => {
     border-bottom: 2rpx solid #eee;
   }
   .itemList {
-    padding: 0 30rpx 30rpx;
     > view {
       display: flex;
       align-items: center;
