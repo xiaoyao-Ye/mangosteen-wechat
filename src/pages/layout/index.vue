@@ -21,15 +21,15 @@
         <view class="banner">
           <view style="color: #ff6600">
             <view>收入</view>
-            <view>{{ balance.income }}</view>
+            <view>{{ ((balance.income ?? 0) / 100)?.toFixed(2) }}</view>
           </view>
           <view style="color: #00ff99">
             <view>支出</view>
-            <view>{{ balance.outcome }}</view>
+            <view>{{ ((balance.outcome ?? 0) / 100)?.toFixed(2) }}</view>
           </view>
           <view>
             <view>净收入</view>
-            <view>{{ balance.netIncome }}</view>
+            <view>{{ ((balance.netIncome ?? 0) / 100)?.toFixed(2) }}</view>
           </view>
         </view>
         <view class="itemList">
@@ -38,7 +38,7 @@
             <view class="title">{{ item.tag?.name }}</view>
             <view class="desc">
               <view class="amount" :style="{ color: item.tag?.category === '支出' ? '#00ff99' : '#ff6600' }">
-                ￥{{ item.amount }}
+                ￥{{ ((item.amount ?? 0) / 100)?.toFixed(2) }}
               </view>
               <view class="date">{{ item.record_date }}</view>
             </view>

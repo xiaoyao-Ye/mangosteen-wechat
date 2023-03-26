@@ -29,8 +29,7 @@ const emit = defineEmits<{
   (e: 'update:dateTime', value: string): void
 }>()
 
-const refAmount = ref(props.amount ? props.amount.toString() : '0')
-// const refAmount = ref(props.amount ? (props.amount / 100).toString() : '0')
+const refAmount = ref(props.amount ? (props.amount / 100).toString() : '0')
 const appendText = (text: string) => {
   const dotIndex = refAmount.value.indexOf('.')
   if (refAmount.value.length >= 13) return
@@ -58,8 +57,7 @@ const appendText = (text: string) => {
 }
 const keyDown = (text: string) => {
   if (text === '提交') {
-    // emit('update:amount', parseFloat(refAmount.value) * 100) // 没能理解为什么 * 100
-    emit('update:amount', parseFloat(refAmount.value))
+    emit('update:amount', parseFloat(refAmount.value) * 100)
     props.onSubmit?.()
     // uni.navigateBack()
     return
