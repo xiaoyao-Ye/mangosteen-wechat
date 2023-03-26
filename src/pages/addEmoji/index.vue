@@ -130,7 +130,7 @@ const back = () => {
     transition: box-shadow 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
     border-radius: 8rpx;
     color: #606266;
-    // border: 2rpx solid skyblue;
+    // border: 2rpx solid #ccc;
     box-shadow: 0 0 0 1px #dcdfe6;
   }
 }

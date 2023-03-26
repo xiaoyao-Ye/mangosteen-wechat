@@ -12,12 +12,12 @@
       :values="tabs"
       @clickItem="tabChange"
       styleType="text"
-      activeColor="skyblue"
+      activeColor="#ccc"
     ></uni-segmented-control>
 
     <view class="tagList">
       <view class="addEmoji tagList-item" @click="addEmoji">
-        <uni-icons type="plusempty" size="24" color="skyblue"></uni-icons>
+        <uni-icons type="plusempty" size="24" color="#ccc"></uni-icons>
         <text>{{ tabs[current] }}标签</text>
       </view>
       <view
@@ -153,7 +153,7 @@ const onSubmit = async () => {
     line-height: 80rpx;
     border-radius: 12rpx;
     border: 2rpx solid #eee;
-    // box-shadow: 0 0 4rpx 2rpx skyblue;
+    // box-shadow: 0 0 4rpx 2rpx #ccc;
   }
   &-active {
     background-color: $primary-color;

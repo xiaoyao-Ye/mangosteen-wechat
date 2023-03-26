@@ -299,7 +299,7 @@ const addBill = () => {
     > view {
       display: flex;
       align-items: center;
-      border-bottom: 2rpx solid skyblue;
+      border-bottom: 2rpx solid #ccc;
       height: 140rpx;
       .sign {
         margin-right: 20rpx;
