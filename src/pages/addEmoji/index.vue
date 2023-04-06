@@ -40,7 +40,7 @@
 import { emojiList } from '../../utils/emoji'
 import NavBar from '../../components/NavBar/index.vue'
 import { Tags } from '../../api/mangosteen/api'
-import { TagDto, TagItemsVo, Category } from '../../api/mangosteen/entity'
+import { TagDto, TagItemsVo, Category } from '../../api/mangosteen/typings.d'
 
 const isEdit = ref(false)
 

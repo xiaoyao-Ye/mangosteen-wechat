@@ -98,7 +98,7 @@ import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMont
 
 import { IS_LAUNCH, TOKEN, USER_INFO } from '../../config/storage_key'
 import { Bill } from '../../api/mangosteen/api'
-import { BalanceVo, BillItemsVo } from '../../api/mangosteen/entity'
+import { BalanceVo, BillItemsVo } from '../../api/mangosteen/typings.d'
 
 const isLaunch = uni.getStorageSync(IS_LAUNCH)
 if (!isLaunch) uni.redirectTo({ url: '/pages/index/index' })

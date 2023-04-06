@@ -41,7 +41,7 @@ import NavBar from '../../components/NavBar/index.vue'
 import KeyBoard from '../../components/KeyBoard/index.vue'
 import { Bill, Tags } from '../../api/mangosteen/api'
 // import { User } from '../../api/mangosteen/api'
-import { Category, TagItemsVo } from '../../api/mangosteen/entity'
+import { Category, TagItemsVo } from '../../api/mangosteen/typings.d'
 import { formatDate } from '../../utils/dayjs'
 
 const back = () => {

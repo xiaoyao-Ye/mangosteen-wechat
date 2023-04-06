@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { Auth } from '../../api/mangosteen/api'
-import { IdentityType } from '../../api/mangosteen/entity'
+import { IdentityType } from '../../api/mangosteen/typings.d'
 import { TOKEN, USER_INFO } from '../../config/storage_key'
 
 const login = () => {

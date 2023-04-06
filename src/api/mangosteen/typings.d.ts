@@ -1,4 +1,7 @@
-export class EmailSignInDto {
+/* eslint-disable */
+// 此文件由 initAPI(https://github.com/xiaoyao-Ye/initapi) 自动生成。请不要手动修改此文件！
+
+export interface EmailSignInDto {
   /** 身份类型 */
   identity_type?: IdentityType
   /** 标识符 */
@@ -7,12 +10,12 @@ export class EmailSignInDto {
   credential?: string
 }
 
-export class SignInVo {
+export interface SignInVo {
   /** token */
   token?: string
 }
 
-export class WeChatSignInDto {
+export interface WeChatSignInDto {
   /** 身份类型 */
   identity_type?: IdentityType
   /** 昵称 */
@@ -25,7 +28,7 @@ export class WeChatSignInDto {
   code?: string
 }
 
-export class TagItemsVo {
+export interface TagItemsVo {
   /** id */
   id?: number
   /** 创建时间 */
@@ -42,12 +45,12 @@ export class TagItemsVo {
   sign?: string
 }
 
-export class TagListVo {
+export interface TagListVo {
   /** 列表 */
   items?: Array<TagItemsVo>
 }
 
-export class TagDto {
+export interface TagDto {
   /** 收支类型 */
   category?: Category
   /** 标签名 */
@@ -58,7 +61,7 @@ export class TagDto {
   userId?: number
 }
 
-export class BalanceVo {
+export interface BalanceVo {
   /** 收入 */
   income?: number
   /** 支出 */
@@ -67,7 +70,7 @@ export class BalanceVo {
   netIncome?: number
 }
 
-export class QueryBillsDto {
+export interface QueryBillsDto {
   /** 分页 */
   pageNum?: number
   /** 每页数量 */
@@ -80,7 +83,7 @@ export class QueryBillsDto {
   userId?: number
 }
 
-export class BillItemsVo {
+export interface BillItemsVo {
   /** id */
   id?: number
   /** 创建时间 */
@@ -103,14 +106,14 @@ export class BillItemsVo {
   tag?: TagItemsVo
 }
 
-export class QueryBillsVo {
+export interface QueryBillsVo {
   /** 列表 */
   items?: Array<BillItemsVo>
   /** 总数量 */
   total?: number
 }
 
-export class CreateBillDto {
+export interface CreateBillDto {
   /** 金额 */
   amount?: number
   /** 标签ID */
@@ -123,12 +126,6 @@ export class CreateBillDto {
   userId?: number
 }
 
-export enum IdentityType {
-  '邮箱' = '邮箱',
-  '微信' = '微信',
-}
+export type IdentityType = '邮箱' | '微信'
 
-export enum Category {
-  '收入' = '收入',
-  '支出' = '支出',
-}
+export type Category = '收入' | '支出'
