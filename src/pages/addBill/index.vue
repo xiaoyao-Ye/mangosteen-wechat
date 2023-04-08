@@ -41,7 +41,7 @@ import NavBar from '../../components/NavBar/index.vue'
 import KeyBoard from '../../components/KeyBoard/index.vue'
 import { Bill, Tags } from '../../api/mangosteen/api'
 // import { User } from '../../api/mangosteen/api'
-import { Category, TagItemsVo } from '../../api/mangosteen/typings.d'
+import { TagItemsVo } from '../../api/mangosteen/typings.d'
 import { formatDate } from '../../utils/dayjs'
 
 const back = () => {
@@ -99,7 +99,7 @@ const onSubmit = async () => {
     amount: amount.value,
     tagId: selectedId.value,
     record_date: dateTime.value,
-    category: tabs[current.value] as Category,
+    category: tabs[current.value],
   })
   back()
   // Object.assign(errors, { kind: [], tag_ids: [], amount: [], happen_at: [] })

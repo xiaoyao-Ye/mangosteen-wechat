@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { Auth } from '../../api/mangosteen/api'
-import { IdentityType } from '../../api/mangosteen/typings.d'
+import { WeChatSignInDto } from '../../api/mangosteen/typings.d'
 import { TOKEN, USER_INFO } from '../../config/storage_key'
 
 const login = () => {
@@ -38,7 +38,7 @@ const login = () => {
       uni.login({
         success: async ({ code }) => {
           try {
-            const data = { code, nickName, avatar, gender, identity_type: IdentityType.微信 }
+            const data: WeChatSignInDto = { code, nickName, avatar, gender, identity_type: '微信' }
             const { token } = await Auth.weChatSignIn(data)
             uni.setStorageSync(TOKEN, token ?? '')
             uni.redirectTo({ url: '/pages/layout/index' })
@@ -58,7 +58,7 @@ const login = () => {
 /** admin 公共测试账号 */
 const tryOut = async () => {
   const { token } = await Auth.emailSignIn({
-    identity_type: IdentityType.邮箱,
+    identity_type: '邮箱',
     identifier: 'admin@Ghosteye.com',
     credential: '123456',
   })
