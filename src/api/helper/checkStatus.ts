@@ -1,18 +1,18 @@
-import { TOKEN } from '../../config/storage_key'
+import { TOKEN } from "../../config/storage_key";
 
 const statusList: Indexable = {
   // 400: '请求失败！请您稍后重试',
-  400: '请求参数错误!',
-  401: '登录失效！请您重新登录',
-  403: '当前账号无权限访问！',
-  404: '你所访问的资源不存在！',
-  405: '请求方式错误！请您稍后重试',
-  408: '请求超时！请您稍后重试',
-  500: '服务异常！',
-  502: '网关错误！',
-  503: '服务不可用！',
-  504: '网关超时！',
-}
+  400: "请求参数错误!",
+  401: "登录失效！请您重新登录",
+  403: "当前账号无权限访问！",
+  404: "你所访问的资源不存在！",
+  405: "请求方式错误！请您稍后重试",
+  408: "请求超时！请您稍后重试",
+  500: "服务异常！",
+  502: "网关错误！",
+  503: "服务不可用！",
+  504: "网关超时！",
+};
 
 export const checkStatus = (status: number, message?: string) => {
   // if (status == 1024) { ...自定义处理 }
@@ -20,12 +20,12 @@ export const checkStatus = (status: number, message?: string) => {
   // console.log(message ?? statusList[status] ?? '请求失败！')
   // const title = statusList[status] ?? message ?? '请求失败！'
   // const title = message ? `${statusList[status]} ${message}` : statusList[status] ?? '请求失败！'
-  const title = message ?? statusList[status] ?? '请求失败！'
-  uni.showToast({ title, icon: 'none' })
+  const title = message ?? statusList[status] ?? "请求失败！";
+  uni.showToast({ title, icon: "none" });
   if (status === 401) {
-    uni.removeStorageSync(TOKEN)
-    uni.redirectTo({ url: '/pages/login/index' })
-    throw new Error(title)
+    uni.removeStorageSync(TOKEN);
+    uni.redirectTo({ url: "/pages/login/index" });
+    throw new Error(title);
   }
-  throw new Error(title)
-}
+  throw new Error(title);
+};

@@ -11,13 +11,12 @@
       <uni-segmented-control
         :current="current"
         :values="['本月', '上月', '今年', '选择时间段']"
-        @clickItem="tabChange"
+        @click-item="tabChange"
         styleType="text"
-        activeColor="skyblue"
-      ></uni-segmented-control>
+        activeColor="skyblue"></uni-segmented-control>
 
       <uni-datetime-picker ref="daterange" v-model="range" type="daterange" @change="rangeChange">
-        {{ '' }}
+        {{ "" }}
       </uni-datetime-picker>
 
       <view class="addBill" @click="addBill">
@@ -30,8 +29,8 @@
             <view class="avatar">
               <image :src="userInfo.avatar"></image>
             </view>
-            <view>{{ userInfo.nickName ? userInfo.nickName : '未登录用户' }}</view>
-            <view>{{ token ? '注销' : '点击进行登录' }}</view>
+            <view>{{ userInfo.nickName ? userInfo.nickName : "未登录用户" }}</view>
+            <view>{{ token ? "注销" : "点击进行登录" }}</view>
           </view>
           <view class="menuList">
             <view v-for="menu in menuList" :key="menu.name" @click="menuHandle(menu)">
@@ -93,107 +92,107 @@
 </template>
 
 <script setup lang="ts">
-import NavBar from '../../components/NavBar/index.vue'
-import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMonthRange } from '../../utils/dayjs'
+import NavBar from "../../components/NavBar/index.vue";
+import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMonthRange } from "../../utils/dayjs";
 
-import { IS_LAUNCH, TOKEN, USER_INFO } from '../../config/storage_key'
-import { Bill } from '../../api/mangosteen/api'
-import { BalanceVo, BillItemsVo } from '../../api/mangosteen/typings.d'
+import { IS_LAUNCH, TOKEN, USER_INFO } from "../../config/storage_key";
+import { Bill } from "../../api/mangosteen/api";
+import { BalanceVo, BillItemsVo } from "../../api/mangosteen/typings.d";
 
-const isLaunch = uni.getStorageSync(IS_LAUNCH)
-if (!isLaunch) uni.redirectTo({ url: '/pages/index/index' })
+const isLaunch = uni.getStorageSync(IS_LAUNCH);
+if (!isLaunch) uni.redirectTo({ url: "/pages/index/index" });
 
-const userInfo = uni.getStorageSync(USER_INFO) || { avatar: '../../static/蘑菇.png' }
-const token = uni.getStorageSync(TOKEN) ?? {}
+const userInfo = uni.getStorageSync(USER_INFO) || { avatar: "../../static/蘑菇.png" };
+const token = uni.getStorageSync(TOKEN) ?? {};
 
 const loginAndLogout = () => {
   if (token) {
-    console.log('注销')
+    console.log("注销");
   } else {
-    uni.redirectTo({ url: '/pages/login/index' })
+    uni.redirectTo({ url: "/pages/login/index" });
   }
-}
+};
 
-const drawer = ref()
+const drawer = ref();
 const showDrawer = () => {
-  drawer.value.open()
-}
+  drawer.value.open();
+};
 
 const menuList = [
-  { name: '记账', icon: '../../static/蘑菇.png' },
-  { name: '统计图表', icon: '../../static/蘑菇.png' },
-  { name: '导出数据', icon: '../../static/蘑菇.png' },
-  { name: '记账提醒', icon: '../../static/蘑菇.png' },
-]
+  { name: "记账", icon: "../../static/蘑菇.png" },
+  { name: "统计图表", icon: "../../static/蘑菇.png" },
+  { name: "导出数据", icon: "../../static/蘑菇.png" },
+  { name: "记账提醒", icon: "../../static/蘑菇.png" },
+];
 const menuHandle = (menu: any) => {
-  if (menu.name !== '记账') return uni.showToast({ title: '敬请期待', icon: 'none' })
-  drawer.value.close()
-}
+  if (menu.name !== "记账") return uni.showToast({ title: "敬请期待", icon: "none" });
+  drawer.value.close();
+};
 
 const tactics: { [key: number]: any } = {
   0: getCurrentMonthRange,
   1: getLastMonthRange,
   2: getCurrentYearRange,
-}
+};
 
-const current = ref<number>(0)
+const current = ref<number>(0);
 const tabChange = (e: any) => {
   if (e.currentIndex == 3) {
-    currentDate.value.length = 0
-    daterange.value.show()
-    current.value = 3
-    return
+    currentDate.value.length = 0;
+    daterange.value.show();
+    current.value = 3;
+    return;
   }
-  if (current.value === e.currentIndex) return
-  current.value = e.currentIndex
-  currentDate.value = tactics[current.value]()
+  if (current.value === e.currentIndex) return;
+  current.value = e.currentIndex;
+  currentDate.value = tactics[current.value]();
 
-  page.value.pageNum = 1
-  billList.value.length = 0
-  getList()
-  getStatistics()
-}
+  page.value.pageNum = 1;
+  billList.value.length = 0;
+  getList();
+  getStatistics();
+};
 
-const page = ref({ pageNum: 1, pageSize: 10 })
-const billList = ref<BillItemsVo[]>([])
+const page = ref({ pageNum: 1, pageSize: 10 });
+const billList = ref<BillItemsVo[]>([]);
 const getList = async () => {
-  console.log('currentDate', currentDate.value)
+  console.log("currentDate", currentDate.value);
   const { items, total } = await Bill.queryPageBills({
     pageNum: page.value.pageNum,
     pageSize: page.value.pageSize,
     startTime: currentDate.value[0],
     endTime: currentDate.value[1],
-  })
-  billList.value.push(...(items ?? []))
-  hasMore.value = page.value.pageNum * page.value.pageSize < total!
-}
-const hasMore = ref(false)
+  });
+  billList.value.push(...(items ?? []));
+  hasMore.value = page.value.pageNum * page.value.pageSize < total!;
+};
+const hasMore = ref(false);
 const loadMore = () => {
-  if (!hasMore.value) return
-  page.value.pageNum++
-  getList()
-}
+  if (!hasMore.value) return;
+  page.value.pageNum++;
+  getList();
+};
 
-const balance = ref<BalanceVo>({ income: 0, outcome: 0, netIncome: 0 })
+const balance = ref<BalanceVo>({ income: 0, outcome: 0, netIncome: 0 });
 // 获取统计信息
 const getStatistics = async () => {
   balance.value = await Bill.balance({
     startTime: currentDate.value[0],
     endTime: currentDate.value[1],
-  })
-}
+  });
+};
 
-const daterange = ref()
-const range = ref([new Date(), new Date()])
-const currentDate = ref<string[]>([]) // 当前选中的日期
+const daterange = ref();
+const range = ref([new Date(), new Date()]);
+const currentDate = ref<string[]>([]); // 当前选中的日期
 const rangeChange = (val: string[]) => {
-  currentDate.value = formatDateRange(val)
+  currentDate.value = formatDateRange(val);
 
-  page.value.pageNum = 1
-  billList.value.length = 0
-  getList()
-  getStatistics()
-}
+  page.value.pageNum = 1;
+  billList.value.length = 0;
+  getList();
+  getStatistics();
+};
 
 // const swipeActionOptions = [
 //   { text: '修改', style: { backgroundColor: '#4cd964' } },
@@ -204,53 +203,51 @@ const rangeChange = (val: string[]) => {
 // }
 
 onShow(() => {
-  currentDate.value = tactics[current.value]()
-  getList()
-  getStatistics()
-})
+  currentDate.value = tactics[current.value]();
+  getList();
+  getStatistics();
+});
 
 const addBill = () => {
-  uni.navigateTo({ url: '/pages/addBill/index' })
-}
+  uni.navigateTo({ url: "/pages/addBill/index" });
+};
 </script>
 
 <style lang="scss" scoped>
 .page {
-  height: 100vh;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 .navBar {
-  padding: 0 20rpx;
   display: flex;
   align-items: center;
   height: 100%;
+  padding: 0 20rpx;
 }
-
 .addBill {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: fixed;
   right: 40rpx;
   bottom: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100rpx;
   height: 100rpx;
-  border-radius: 100%;
   background-color: $primary-color;
+  border-radius: 100%;
 }
-
 .drawer {
   .head {
-    padding-bottom: 20rpx;
     padding-top: 120rpx;
-    text-align: center;
+    padding-bottom: 20rpx;
     color: white;
+    text-align: center;
     background-color: $primary-color;
     .avatar {
-      margin: 0 auto;
       width: 150rpx;
       height: 150rpx;
+      margin: 0 auto;
       overflow: hidden;
       image {
         width: 100%;
@@ -262,9 +259,9 @@ const addBill = () => {
   .menuList {
     padding: 20rpx;
     > view {
-      height: 80rpx;
       display: flex;
       align-items: center;
+      height: 80rpx;
     }
     image {
       width: 60rpx;
@@ -273,47 +270,47 @@ const addBill = () => {
     }
   }
 }
-
 .content {
   flex: 1;
-  overflow-y: scroll;
   padding: 30rpx;
+  overflow-y: scroll;
   .banner {
-    margin-bottom: 30rpx;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    text-align: center;
     height: 140rpx;
+    margin-bottom: 30rpx;
+    color: white;
+    text-align: center;
+    background-color: #252a43;
+
     // border: 2rpx solid;
     border-radius: 20rpx;
-    background-color: #252a43;
-    color: white;
   }
   .action-item {
-    padding: 20rpx;
     height: 80rpx;
-    border-bottom: 2rpx solid #eee;
+    padding: 20rpx;
+    border-bottom: 2rpx solid #eeeeee;
   }
   .itemList {
     > view {
       display: flex;
       align-items: center;
-      border-bottom: 2rpx solid #ccc;
       height: 140rpx;
+      border-bottom: 2rpx solid #cccccc;
       .sign {
-        margin-right: 20rpx;
-        width: 80rpx;
-        height: 80rpx;
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 80rpx;
+        height: 80rpx;
+        margin-right: 20rpx;
+        background-color: #cccccc;
         border-radius: 100%;
-        background-color: #ccc;
       }
       .title {
-        font-weight: bold;
         font-size: 36rpx;
+        font-weight: bold;
       }
       .desc {
         flex: 1;
@@ -325,7 +322,7 @@ const addBill = () => {
       }
       .date {
         font-size: 28rpx;
-        color: #666;
+        color: #666666;
       }
     }
   }

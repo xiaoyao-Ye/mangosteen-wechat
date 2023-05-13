@@ -3,129 +3,129 @@
 
 export interface EmailSignInDto {
   /** 身份类型 */
-  identity_type?: IdentityType
+  identity_type?: IdentityType;
   /** 标识符 */
-  identifier?: string
+  identifier?: string;
   /** 凭证 */
-  credential?: string
+  credential?: string;
 }
 
 export interface SignInVo {
   /** token */
-  token?: string
+  token?: string;
 }
 
 export interface WeChatSignInDto {
   /** 身份类型 */
-  identity_type?: IdentityType
+  identity_type?: IdentityType;
   /** 昵称 */
-  nickName?: string
+  nickName?: string;
   /** 头像 */
-  avatar?: string
+  avatar?: string;
   /** 性别 */
-  gender?: string
+  gender?: string;
   /** 微信用户登录凭证 */
-  code?: string
+  code?: string;
 }
 
 export interface TagItemsVo {
   /** id */
-  id?: number
+  id?: number;
   /** 创建时间 */
-  created_at?: string
+  created_at?: string;
   /** 更新时间 */
-  updated_at?: string
+  updated_at?: string;
   /** 软删除时间 */
-  deleted_at?: string
+  deleted_at?: string;
   /** 收支类型 */
-  category?: Category
+  category?: Category;
   /** 标签名 */
-  name?: string
+  name?: string;
   /** 标签符号 */
-  sign?: string
+  sign?: string;
 }
 
 export interface TagListVo {
   /** 列表 */
-  items?: Array<TagItemsVo>
+  items?: Array<TagItemsVo>;
 }
 
 export interface TagDto {
   /** 收支类型 */
-  category?: Category
+  category?: Category;
   /** 标签名 */
-  name?: string
+  name?: string;
   /** 标签符号 */
-  sign?: string
+  sign?: string;
   /** 用户Id */
-  userId?: number
+  userId?: number;
 }
 
 export interface BalanceVo {
   /** 收入 */
-  income?: number
+  income?: number;
   /** 支出 */
-  outcome?: number
+  outcome?: number;
   /** 净收入 */
-  netIncome?: number
+  netIncome?: number;
 }
 
 export interface QueryBillsDto {
   /** 分页 */
-  pageNum?: number
+  pageNum?: number;
   /** 每页数量 */
-  pageSize?: number
+  pageSize?: number;
   /** 起始时间 */
-  startTime?: string
+  startTime?: string;
   /** 结束时间 */
-  endTime?: string
+  endTime?: string;
   /** 用户ID */
-  userId?: number
+  userId?: number;
 }
 
 export interface BillItemsVo {
   /** id */
-  id?: number
+  id?: number;
   /** 创建时间 */
-  created_at?: string
+  created_at?: string;
   /** 更新时间 */
-  updated_at?: string
+  updated_at?: string;
   /** 软删除时间 */
-  deleted_at?: string
+  deleted_at?: string;
   /** 用户ID */
-  userId?: number
+  userId?: number;
   /** 标签ID */
-  tagId?: number
+  tagId?: number;
   /** 金额 */
-  amount?: number
+  amount?: number;
   /** 创建日期 */
-  record_date?: string
+  record_date?: string;
   /** 收支类型 */
-  category?: string
+  category?: string;
   /** 标签信息 */
-  tag?: TagItemsVo
+  tag?: TagItemsVo;
 }
 
 export interface QueryBillsVo {
   /** 列表 */
-  items?: Array<BillItemsVo>
+  items?: Array<BillItemsVo>;
   /** 总数量 */
-  total?: number
+  total?: number;
 }
 
 export interface CreateBillDto {
   /** 金额 */
-  amount?: number
+  amount?: number;
   /** 标签ID */
-  tagId?: number
+  tagId?: number;
   /** 记账日期 */
-  record_date?: string
+  record_date?: string;
   /** 收支类型 */
-  category?: Category
+  category?: Category;
   /** 用户ID */
-  userId?: number
+  userId?: number;
 }
 
-export type IdentityType = '邮箱' | '微信'
+export type IdentityType = "邮箱" | "微信";
 
-export type Category = '收入' | '支出'
+export type Category = "收入" | "支出";

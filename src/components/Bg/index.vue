@@ -1,17 +1,13 @@
 <script setup lang="ts">
 // import { isDark } from "#imports";
-import { computed, ref } from 'vue'
-const isDark = ref(true)
-const color = computed(() => (isDark.value ? '#fff' : '#0d9488'))
+import { computed, ref } from "vue";
+const isDark = ref(true);
+const color = computed(() => (isDark.value ? "#fff" : "#0d9488"));
 </script>
 
 <template>
   <div class="z--1 pf top-0 left-0 overflow-hidden h-screen w-screen">
-    <div
-      class="z--200 rounded-full absolute"
-      un-children="z--200 rounded-full pa"
-      un-children-after="content-none rounded-md"
-    >
+    <div class="z--200 rounded-full absolute" un-children="z--200 rounded-full pa" un-children-after="content-none rounded-md">
       <div class="signup-bg-stars w-10px h-10px" un-after="w-1px h-1px" />
       <div class="signup-bg-stars-2 w-20px h-20px" un-after="w-2px h-2px" />
       <div class="signup-bg-stars-3 w-30px h-30px"></div>
@@ -23,7 +19,7 @@ const color = computed(() => (isDark.value ? '#fff' : '#0d9488'))
 <style>
 .signup-bg-stars {
   border-radius: 100%;
-  box-shadow: 750px 740px 10px rgba(255, 255, 255, 0.2), 1350px 631px 10px v-bind(color), 56px 1452px 10px v-bind(color),
+  box-shadow: 750px 740px 10px rgb(255 255 255 / 20%), 1350px 631px 10px v-bind(color), 56px 1452px 10px v-bind(color),
     554px 1842px 10px v-bind(color), 1977px 711px 10px v-bind(color), 1773px 515px 10px v-bind(color),
     1874px 323px 10px v-bind(color), 382px 762px 10px v-bind(color), 1327px 1856px 10px v-bind(color),
     921px 157px 10px v-bind(color), 1802px 703px 10px v-bind(color), 1612px 757px 10px v-bind(color),
@@ -47,13 +43,11 @@ const color = computed(() => (isDark.value ? '#fff' : '#0d9488'))
     1855px 1115px 10px v-bind(color), 93px 1316px 10px v-bind(color), 1244px 95px 10px v-bind(color),
     1429px 545px 10px v-bind(color), 1802px 1521px 10px v-bind(color), 479px 714px 10px v-bind(color),
     221px 785px 10px v-bind(color);
-  animation: animStar 100s linear infinite;
+  animation: anim-star 100s linear infinite;
 }
-
 .signup-bg-stars::after {
   border-radius: 100%;
-
-  box-shadow: 750px 740px 10px rgba(255, 255, 255, 0.2), 1350px 631px 10px v-bind(color), 56px 1452px 10px v-bind(color),
+  box-shadow: 750px 740px 10px rgb(255 255 255 / 20%), 1350px 631px 10px v-bind(color), 56px 1452px 10px v-bind(color),
     554px 1842px 10px v-bind(color), 1977px 711px 10px v-bind(color), 1773px 515px 10px v-bind(color),
     1874px 323px 10px v-bind(color), 382px 762px 10px v-bind(color), 1327px 1856px 10px v-bind(color),
     921px 157px 10px v-bind(color), 1802px 703px 10px v-bind(color), 1612px 757px 10px v-bind(color),
@@ -79,39 +73,36 @@ const color = computed(() => (isDark.value ? '#fff' : '#0d9488'))
     221px 785px 10px v-bind(color);
   opacity: 0.7;
 }
-
 .signup-bg-stars-2 {
   border-radius: 100%;
-
-  box-shadow: 18px 249px 10px rgba(255, 255, 255, 0.2), 1010px 1194px 10px v-bind(color),
-    1566px 862px 10px v-bind(color), 1522px 47px 10px v-bind(color), 1268px 1429px 10px v-bind(color),
-    685px 239px 10px v-bind(color), 511px 1827px 10px v-bind(color), 1862px 1202px 10px v-bind(color),
-    1869px 491px 10px v-bind(color), 912px 344px 10px v-bind(color), 11px 208px 10px v-bind(color),
-    1694px 572px 10px v-bind(color), 779px 662px 10px v-bind(color), 1430px 812px 10px v-bind(color),
-    365px 1526px 10px v-bind(color), 185px 823px 10px v-bind(color), 1954px 1745px 10px v-bind(color),
-    445px 1728px 10px v-bind(color), 826px 1711px 10px v-bind(color), 1703px 1366px 10px v-bind(color);
-  animation: animStar 150s linear infinite;
+  box-shadow: 18px 249px 10px rgb(255 255 255 / 20%), 1010px 1194px 10px v-bind(color), 1566px 862px 10px v-bind(color),
+    1522px 47px 10px v-bind(color), 1268px 1429px 10px v-bind(color), 685px 239px 10px v-bind(color),
+    511px 1827px 10px v-bind(color), 1862px 1202px 10px v-bind(color), 1869px 491px 10px v-bind(color),
+    912px 344px 10px v-bind(color), 11px 208px 10px v-bind(color), 1694px 572px 10px v-bind(color), 779px 662px 10px v-bind(color),
+    1430px 812px 10px v-bind(color), 365px 1526px 10px v-bind(color), 185px 823px 10px v-bind(color),
+    1954px 1745px 10px v-bind(color), 445px 1728px 10px v-bind(color), 826px 1711px 10px v-bind(color),
+    1703px 1366px 10px v-bind(color);
+  animation: anim-star 150s linear infinite;
 }
-
 .signup-bg-stars-2::after {
-  box-shadow: 18px 249px 10px rgba(255, 255, 255, 0.2), 1010px 1194px 10px v-bind(color),
-    1566px 862px 10px v-bind(color), 1522px 47px 10px v-bind(color), 1268px 1429px 10px v-bind(color),
-    685px 239px 10px v-bind(color), 511px 1827px 10px v-bind(color), 1862px 1202px 10px v-bind(color),
-    1869px 491px 10px v-bind(color), 912px 344px 10px v-bind(color), 11px 208px 10px v-bind(color),
-    1694px 572px 10px v-bind(color), 779px 662px 10px v-bind(color), 1430px 812px 10px v-bind(color),
-    365px 1526px 10px v-bind(color), 185px 823px 10px v-bind(color), 1954px 1745px 10px v-bind(color),
-    445px 1728px 10px v-bind(color), 826px 1711px 10px v-bind(color), 1703px 1366px 10px v-bind(color);
+  box-shadow: 18px 249px 10px rgb(255 255 255 / 20%), 1010px 1194px 10px v-bind(color), 1566px 862px 10px v-bind(color),
+    1522px 47px 10px v-bind(color), 1268px 1429px 10px v-bind(color), 685px 239px 10px v-bind(color),
+    511px 1827px 10px v-bind(color), 1862px 1202px 10px v-bind(color), 1869px 491px 10px v-bind(color),
+    912px 344px 10px v-bind(color), 11px 208px 10px v-bind(color), 1694px 572px 10px v-bind(color), 779px 662px 10px v-bind(color),
+    1430px 812px 10px v-bind(color), 365px 1526px 10px v-bind(color), 185px 823px 10px v-bind(color),
+    1954px 1745px 10px v-bind(color), 445px 1728px 10px v-bind(color), 826px 1711px 10px v-bind(color),
+    1703px 1366px 10px v-bind(color);
 }
-
 .signup-bg-stars-3 {
   /* border-radius: 100%; */
-  box-shadow: 588px 305px 10px rgba(255, 255, 255, 0.2), 1968px 1036px 10px v-bind(color),
-    970px 941px 10px v-bind(color), 655px 814px 10px v-bind(color), 376px 480px 10px v-bind(color),
-    257px 519px 10px v-bind(color), 1417px 545px 10px v-bind(color), 872px 281px 10px v-bind(color),
-    724px 937px 10px v-bind(color), 304px 1811px 10px v-bind(color);
-  animation: animStar 200s linear infinite;
+  box-shadow: 588px 305px 10px rgb(255 255 255 / 20%), 1968px 1036px 10px v-bind(color), 970px 941px 10px v-bind(color),
+    655px 814px 10px v-bind(color), 376px 480px 10px v-bind(color), 257px 519px 10px v-bind(color),
+    1417px 545px 10px v-bind(color), 872px 281px 10px v-bind(color), 724px 937px 10px v-bind(color),
+    304px 1811px 10px v-bind(color);
+  animation: anim-star 200s linear infinite;
 }
-/* 
+
+/*
   .signup-bg-stars-3::after {
     content: "";
     box-shadow: 588px 305px 10px rgba(255, 255, 255, 1), 1968px 1036px 10px v-bind(color),
@@ -120,6 +111,7 @@ const color = computed(() => (isDark.value ? '#fff' : '#0d9488'))
       1417px 545px 10px v-bind(color), 872px 281px 10px v-bind(color),
       724px 937px 10px v-bind(color), 304px 1811px 10px v-bind(color);
   } */
+
 /* .box {
     width: 30px;
     height: 30px;
@@ -130,16 +122,14 @@ const color = computed(() => (isDark.value ? '#fff' : '#0d9488'))
     animation: animStar 100s linear infinite;
   } */
 
-@keyframes animStar {
+@keyframes anim-star {
   from {
     transform: translateY(-2000px);
   }
-
   to {
     transform: translateY(0);
   }
 }
-
 .h-screen {
   height: 100vh;
 }
