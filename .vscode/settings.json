@@ -3,6 +3,9 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "editor.codeActionsOnSave": {
+    // 保存时自动修复
+    "source.fixAll.eslint": true
+  },
   "cSpell.words": ["axios", "daterange", "plusempty", "Unocss", "uview"],
-  "volar.inlayHints.eventArgumentInInlineHandlers": false
 }

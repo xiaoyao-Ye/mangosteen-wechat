@@ -1,5 +1,14 @@
-node_modules
-# package.json
+/dist/*
+.local
+/node_modules/**
+
+**/*.svg
+**/*.sh
+
+/public/*
+stats.html
+
 package-lock.json
-dist
 src/uni_modules
+
+.npmrc
