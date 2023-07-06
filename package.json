@@ -7,9 +7,8 @@
     "commit": "git-cz",
     "commit:origin": "git pull && git add . && git-cz && git push",
     "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
-    "lint-staged": "lint-staged",
     "lint:eslint": "eslint --fix --ext .js,.ts,.tsx,.vue ./src",
-    "lint:prettier": "prettier --write \"src/**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
+    "lint:prettier": "prettier --write \"**/*.{js,ts,json,tsx,css,less,scss,vue,html,md}\"",
     "lint:stylelint": "stylelint --cache --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
     "release": "release-it",
     "ci": "wechat-ci",
@@ -76,7 +75,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "9.12.0",
     "git-cz": "^4.9.0",
-    "initapi": "^0.0.3",
+    "initapi": "^0.1.0",
     "lint-staged": "^13.2.2",
     "postcss-html": "^1.5.0",
     "prettier": "^2.8.8",
@@ -97,6 +96,6 @@
     "wechat-ci": "^0.2.6"
   },
   "simple-git-hooks": {
-    "pre-commit": "npm run lint-staged"
+    "pre-commit": "npx lint-staged"
   }
 }
