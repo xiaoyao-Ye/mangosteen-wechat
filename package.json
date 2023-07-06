@@ -75,7 +75,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "9.12.0",
     "git-cz": "^4.9.0",
-    "initapi": "^0.1.0",
+    "initapi": "^0.2.0",
     "lint-staged": "^13.2.2",
     "postcss-html": "^1.5.0",
     "prettier": "^2.8.8",
