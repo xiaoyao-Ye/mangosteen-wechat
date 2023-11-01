@@ -61,26 +61,13 @@ export interface TagDto {
   userId?: number;
 }
 
-export interface BalanceVo {
+export interface StatisticVo {
   /** 收入 */
   income?: number;
   /** 支出 */
   outcome?: number;
   /** 净收入 */
   netIncome?: number;
-}
-
-export interface QueryBillsDto {
-  /** 分页 */
-  pageNum?: number;
-  /** 每页数量 */
-  pageSize?: number;
-  /** 起始时间 */
-  startTime?: string;
-  /** 结束时间 */
-  endTime?: string;
-  /** 用户ID */
-  userId?: number;
 }
 
 export interface BillItemsVo {

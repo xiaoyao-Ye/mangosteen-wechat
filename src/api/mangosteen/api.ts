@@ -9,26 +9,34 @@ import {
   WeChatSignInDto,
   TagListVo,
   TagDto,
-  BalanceVo,
-  QueryBillsDto,
+  StatisticVo,
   QueryBillsVo,
   CreateBillDto,
 } from "./typings.d";
 
 export class Common {
   static getHello() {
-    return request<void>({
+    return request<string>({
       url: `/api`,
       method: "GET",
     });
   }
 }
 
-export class Auth {
+export class Login {
+  /** 发送验证码-发送验证码到指定邮箱 */
+  static signUp(data?: EmailSignInDto) {
+    return request<void>({
+      url: `/api/v1/login/signUp`,
+      method: "POST",
+      data,
+    });
+  }
+
   /** 登录-邮箱登录 */
   static emailSignIn(data?: EmailSignInDto) {
     return request<SignInVo>({
-      url: `/api/v1/auth/emailSignIn`,
+      url: `/api/v1/login/emailSignIn`,
       method: "POST",
       data,
     });
@@ -37,7 +45,7 @@ export class Auth {
   /** 登录-微信授权登录 */
   static weChatSignIn(data?: WeChatSignInDto) {
     return request<SignInVo>({
-      url: `/api/v1/auth/weChatSignIn`,
+      url: `/api/v1/login/weChatSignIn`,
       method: "POST",
       data,
     });
@@ -48,7 +56,7 @@ export class Tags {
   /** 标签列表-获取当前请求用户的所有标签 */
   static getAllTags() {
     return request<TagListVo>({
-      url: `/api/v1/tags/getAll`,
+      url: `/api/v1/tags/all`,
       method: "GET",
     });
   }
@@ -82,20 +90,20 @@ export class Tags {
 
 export class Bill {
   /** 统计信息 */
-  static balance(params?: { startTime?: string; endTime?: string }) {
-    return request<BalanceVo>({
-      url: `/api/v1/bill/balance`,
+  static statistic(params?: { startTime?: string; endTime?: string }) {
+    return request<StatisticVo>({
+      url: `/api/v1/bill/statistic`,
       method: "GET",
       params,
     });
   }
 
   /** 查询记账-查询当前用户账单记录 */
-  static queryPageBills(data?: QueryBillsDto) {
+  static queryPageBills(params?: { pageNum?: number; pageSize?: number; startTime?: string; endTime?: string; userId?: number }) {
     return request<QueryBillsVo>({
       url: `/api/v1/bill/queryPage`,
-      method: "POST",
-      data,
+      method: "GET",
+      params,
     });
   }
 
@@ -122,17 +130,6 @@ export class Bill {
     return request<void>({
       url: `/api/v1/bill/${path.id}`,
       method: "DELETE",
-    });
-  }
-}
-
-export class Email {
-  /** 发送验证码-发送验证码到指定邮箱 */
-  static sendEmail(data?: EmailSignInDto) {
-    return request<void>({
-      url: `/api/v1/email/signUp`,
-      method: "POST",
-      data,
     });
   }
 }
