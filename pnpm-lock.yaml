@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@dcloudio/uni-app':
     specifier: 3.0.0-alpha-3060320220919001
@@ -94,8 +98,8 @@ devDependencies:
     specifier: ^4.9.0
     version: 4.9.0
   initapi:
-    specifier: ^0.2.0
-    version: 0.2.0
+    specifier: ^0.3.0
+    version: 0.3.0
   lint-staged:
     specifier: ^13.2.2
     version: registry.npmmirror.com/lint-staged@13.2.2
@@ -5574,8 +5578,8 @@ packages:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
     dev: true
 
-  /initapi@0.2.0:
-    resolution: {integrity: sha512-c78HPAAbE0z14NzAMn0tfJ+BW3N8shF7pF5WfWgJppr6JNKU5iiXSv5tbBlhBWbiUDz3I5Z2fFMjS04BCC4kng==}
+  /initapi@0.3.0:
+    resolution: {integrity: sha512-PZZSXcJn3sFepVQg42cuo3bcQm6vUx2kk8vqtZL/Q0fCsLJ+UrThUTM5vUgr3ReUsxRpqjaZTop+fjLdP9O9/w==}
     hasBin: true
     dependencies:
       '@clack/prompts': 0.6.3
@@ -6629,6 +6633,7 @@ packages:
   /pify@4.0.1:
     resolution: {integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==}
     engines: {node: '>=6'}
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -7113,6 +7118,7 @@ packages:
 
   /prr@1.0.1:
     resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}
+    requiresBuild: true
     dev: true
 
   /psl@1.9.0:
@@ -9129,6 +9135,7 @@ packages:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==, registry: https://registry.npmjs.org/, tarball: https://registry.npmmirror.com/debug/-/debug-3.2.7.tgz}
     name: debug
     version: 3.2.7
+    requiresBuild: true
     peerDependencies:
       supports-color: '*'
     peerDependenciesMeta:
@@ -9963,6 +9970,7 @@ packages:
     name: iconv-lite
     version: 0.6.3
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dependencies:
       safer-buffer: registry.npmmirror.com/safer-buffer@2.1.2
     dev: true
