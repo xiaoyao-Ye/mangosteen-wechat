@@ -1,6 +1,6 @@
 {
   "name": "wechat",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks",
