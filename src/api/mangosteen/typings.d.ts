@@ -38,7 +38,7 @@ export interface TagItemsVo {
   /** 软删除时间 */
   deleted_at?: string;
   /** 收支类型 */
-  category?: Category;
+  category?: "收入" | "支出";
   /** 标签名 */
   name?: string;
   /** 标签符号 */
@@ -52,7 +52,7 @@ export interface TagListVo {
 
 export interface TagDto {
   /** 收支类型 */
-  category?: Category;
+  category?: "收入" | "支出";
   /** 标签名 */
   name?: string;
   /** 标签符号 */
