@@ -4,16 +4,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.codeActionsOnSave": {
-    // 保存时自动修复
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
-  "cSpell.words": [
-    "axios",
-    "daterange",
-    "dcloudio",
-    "initapi",
-    "plusempty",
-    "Unocss",
-    "uview"
-  ]
+  "cSpell.words": ["axios", "daterange", "dcloudio", "initapi", "plusempty", "Unocss", "uview"]
 }
