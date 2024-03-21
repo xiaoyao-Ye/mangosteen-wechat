@@ -17,7 +17,8 @@ const config = {
   // baseURL: 'http://yeyaoyao.icu',
   // baseURL: 'http://localhost:3000',
   // baseURL: 'http://127.0.0.1:3000',
-  baseURL: "http://192.168.1.2:3000",
+  // baseURL: "http://192.168.1.2:3000",
+  baseURL: "http://43.136.108.102:1024",
   // 设置请求超时时间
   timeout: 10000,
   // 跨域的时候允许携带凭证

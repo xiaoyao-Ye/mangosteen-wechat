@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { Auth } from "../../api/mangosteen/api";
+import { Login } from "../../api/mangosteen/api";
 import { WeChatSignInDto } from "../../api/mangosteen/typings.d";
 import { TOKEN, USER_INFO } from "../../config/storage_key";
 
@@ -39,7 +39,7 @@ const login = () => {
         success: async ({ code }) => {
           try {
             const data: WeChatSignInDto = { code, nickName, avatar, gender, identity_type: "微信" };
-            const { token } = await Auth.weChatSignIn(data);
+            const { token } = await Login.weChatSignIn(data);
             uni.setStorageSync(TOKEN, token ?? "");
             uni.redirectTo({ url: "/pages/layout/index" });
             console.log("result", token);
@@ -57,7 +57,7 @@ const login = () => {
 
 /** admin 公共测试账号 */
 const tryOut = async () => {
-  const { token } = await Auth.emailSignIn({
+  const { token } = await Login.emailSignIn({
     identity_type: "邮箱",
     identifier: "admin@Ghosteye.com",
     credential: "123456",

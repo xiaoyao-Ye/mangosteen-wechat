@@ -97,7 +97,7 @@ import { formatDateRange, getCurrentMonthRange, getCurrentYearRange, getLastMont
 
 import { IS_LAUNCH, TOKEN, USER_INFO } from "../../config/storage_key";
 import { Bill } from "../../api/mangosteen/api";
-import { BalanceVo, BillItemsVo } from "../../api/mangosteen/typings.d";
+import { StatisticVo, BillItemsVo } from "../../api/mangosteen/typings.d";
 
 const isLaunch = uni.getStorageSync(IS_LAUNCH);
 if (!isLaunch) uni.redirectTo({ url: "/pages/index/index" });
@@ -173,10 +173,10 @@ const loadMore = () => {
   getList();
 };
 
-const balance = ref<BalanceVo>({ income: 0, outcome: 0, netIncome: 0 });
+const balance = ref<StatisticVo>({ income: 0, outcome: 0, netIncome: 0 });
 // 获取统计信息
 const getStatistics = async () => {
-  balance.value = await Bill.balance({
+  balance.value = await Bill.statistic({
     startTime: currentDate.value[0],
     endTime: currentDate.value[1],
   });

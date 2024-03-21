@@ -38,7 +38,7 @@ export interface TagItemsVo {
   /** 软删除时间 */
   deleted_at?: string;
   /** 收支类型 */
-  category?: Category;
+  category?: "收入" | "支出";
   /** 标签名 */
   name?: string;
   /** 标签符号 */
@@ -52,7 +52,7 @@ export interface TagListVo {
 
 export interface TagDto {
   /** 收支类型 */
-  category?: Category;
+  category?: "收入" | "支出";
   /** 标签名 */
   name?: string;
   /** 标签符号 */
@@ -61,26 +61,13 @@ export interface TagDto {
   userId?: number;
 }
 
-export interface BalanceVo {
+export interface StatisticVo {
   /** 收入 */
   income?: number;
   /** 支出 */
   outcome?: number;
   /** 净收入 */
   netIncome?: number;
-}
-
-export interface QueryBillsDto {
-  /** 分页 */
-  pageNum?: number;
-  /** 每页数量 */
-  pageSize?: number;
-  /** 起始时间 */
-  startTime?: string;
-  /** 结束时间 */
-  endTime?: string;
-  /** 用户ID */
-  userId?: number;
 }
 
 export interface BillItemsVo {
